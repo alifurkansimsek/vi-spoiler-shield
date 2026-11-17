@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en" data-i18n-title="oTitle">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VI Spoiler Shield</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <a class="brand" href="#genel">
+        <img src="logo.svg" alt="" width="44" height="44">
+        <span data-i18n-html="nameTwoLine">VI Spoiler<br>Shield</span>
+      </a>
+      <nav class="tabs" aria-label="Sections">
+        <a href="#genel" data-tab="genel"><svg class="icon"><use href="icons.svg#i-shield"/></svg><span data-i18n="tabProtection">Protection</span></a>
+        <a href="#gecmis" data-tab="gecmis"><svg class="icon"><use href="icons.svg#i-clock"/></svg><span data-i18n="tabHistory">History</span></a>
+        <a href="#listeler" data-tab="listeler"><svg class="icon"><use href="icons.svg#i-list"/></svg><span data-i18n="tabLists">Lists</span></a>
+        <a href="#senkron" data-tab="senkron"><svg class="icon"><use href="icons.svg#i-folder"/></svg><span data-i18n="tabSync">Across browsers</span></a>
+        <a href="#hakkinda" data-tab="hakkinda"><svg class="icon"><use href="icons.svg#i-eye"/></svg><span data-i18n="tabLimits">What it can miss</span></a>
+      </nav>
+      <p class="side-foot muted"><span data-i18n="version">Version</span> <span id="ver"></span></p>
+    </aside>
+
+    <main>
+      <!-- Protection -->
+      <section id="genel" class="panel">
+        <header class="phead">
+          <h1 data-i18n="tabProtection">Protection</h1>
+          <p class="muted" data-i18n="oProtectionLead">Changes are saved at once. Open tabs pick them up when reloaded.</p>
+        </header>
+        <div class="state-card" id="state-card">
+          <span class="dot" id="state-dot"></span>
+          <div><strong id="state-title"></strong><span class="muted" id="state-sub"></span></div>
+          <button class="btn" id="state-btn"></button>
+        </div>
+        <div class="group">
+          <div class="switch lang-row">
+            <span class="label"><strong data-i18n="oLanguage">Language</strong><span data-i18n="oLanguageDesc">The language of every screen in the extension.</span></span>
+            <select id="lang" aria-label="Language">
+              <option value="auto" data-i18n="langAuto">Automatic (browser language)</option>
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+          <label class="switch"><span class="label"><strong data-i18n="strict">Strict mode</strong><span data-i18n="oStrictDesc">Also hides hints that never name the game: the studio's name in a gaming context, the city's name, the series name without a number. Some content about older Rockstar games may be hidden too.</span></span><input type="checkbox" data-key="strict"><span class="track"></span></label>
+          <label class="switch"><span class="label"><strong data-i18n="oVisual">Check images by fingerprint</strong><span data-i18n="oVisualDesc">Catches official game images that carry no text. Images appear a moment later and use a little more data.</span></span><input type="checkbox" data-key="visual"><span class="track"></span></label>
+          <label class="switch"><span class="label"><strong data-i18n="oPlaceholders">Show a notice in place of feed cards</strong><span data-i18n="oPlaceholdersDesc">When off, cards on feeds like YouTube, X and Reddit disappear without a trace.</span></span><input type="checkbox" data-key="placeholders"><span class="track"></span></label>
+          <label class="switch"><span class="label"><strong data-i18n="oLogging">Keep a block history</strong><span data-i18n="oLoggingDesc">Stores the time, the site and how many items were hidden. Private windows are never recorded.</span></span><input type="checkbox" data-key="logging"><span class="track"></span></label>
+        </div>
+      </section>
+
+      <!-- History -->
+      <section id="gecmis" class="panel" hidden>
+        <header class="phead">
+          <h1 data-i18n="tabHistory">History</h1>
+          <p class="muted" data-i18n="oHistoryLead">What was hidden is never stored. The page path is kept encrypted and opened only when you ask.</p>
+        </header>
+        <div class="stats">
+          <div><b class="num" id="st-today">0</b><span data-i18n="today">today</span></div>
+          <div><b class="num" id="st-week">0</b><span data-i18n="week">last 7 days</span></div>
+          <div><b class="num" id="st-total">0</b><span data-i18n="total">total</span></div>
+          <figure class="bars">
+            <div class="bars-row" id="bars"></div>
+            <figcaption class="muted" data-i18n="oLast14">Last 14 days</figcaption>
+          </figure>
+        </div>
+        <div class="toolbar">
+          <input type="text" id="filter" data-i18n-attr="placeholder:oFilter;aria-label:oFilter">
+          <button class="btn btn-danger" id="clear"><svg class="icon"><use href="icons.svg#i-trash"/></svg><span data-i18n="oClear">Clear history</span></button>
+        </div>
+        <div class="table-wrap">
+          <table class="log">
+            <thead><tr><th data-i18n="thTime">Time</th><th data-i18n="thSite">Site</th><th data-i18n="thHidden">Hidden</th><th data-i18n="thPath">Page path</th></tr></thead>
+            <tbody id="log"></tbody>
+          </table>
+          <p class="empty muted" id="log-empty" hidden></p>
+        </div>
+        <p class="note muted" data-i18n="oKeyNote">The encryption key sits next to the data in the browser: it stops accidental reading, not someone with access to your computer.</p>
+      </section>
+
+      <!-- Lists -->
+      <section id="listeler" class="panel" hidden>
+        <header class="phead">
+          <h1 data-i18n="tabLists">Lists</h1>
+          <p class="muted" data-i18n="oListsLead">The built-in term list is not shown here, because the list itself is a spoiler.</p>
+        </header>
+        <div class="field">
+          <label for="terms"><strong data-i18n="oTerms">Your own terms</strong><span class="muted" data-i18n="oTermsDesc">New names you learn after release. One term per line.</span></label>
+          <textarea id="terms" rows="5" spellcheck="false"></textarea>
+        </div>
+        <div class="field">
+          <label for="customDomains"><strong data-i18n="oBlockSites">Always block these sites</strong><span class="muted" data-i18n="oBlockSitesDesc">One domain per line, e.g. example.com</span></label>
+          <textarea id="customDomains" rows="4" spellcheck="false"></textarea>
+        </div>
+        <div class="field">
+          <label for="allowDomains"><strong data-i18n="oAllowSites">Protection off on these sites</strong><span class="muted" data-i18n="oAllowSitesDesc">The extension does nothing on these sites.</span></label>
+          <textarea id="allowDomains" rows="3" spellcheck="false"></textarea>
+        </div>
+        <div class="actions"><button class="btn btn-primary" id="save-lists"><svg class="icon"><use href="icons.svg#i-check"/></svg><span data-i18n="oSaveLists">Save lists</span></button></div>
+
+        <div class="remote">
+          <h2 data-i18n="oRemote">Automatic term list</h2>
+          <p class="muted" data-i18n="oRemoteDesc">New names that surface after release are fetched from this address a few times a day. The list can only add; it cannot turn the built-in protection off or allow a site.</p>
+          <div class="field inline">
+            <input type="url" id="listUrl" data-i18n-attr="aria-label:oListUrl" spellcheck="false">
+            <button class="btn" id="list-refresh"><svg class="icon"><use href="icons.svg#i-refresh"/></svg><span data-i18n="oRefresh">Update now</span></button>
+          </div>
+          <p class="muted small" id="list-info"></p>
+        </div>
+      </section>
+
+      <!-- Sync -->
+      <section id="senkron" class="panel" hidden>
+        <header class="phead">
+          <h1 data-i18n="tabSync">Across browsers</h1>
+          <p class="muted" data-i18n="oSyncLead">The extension runs from the same folder in every browser. Your settings live in the ayarlar.json file in that folder: add a term in one browser and the other picks it up within a minute or two.</p>
+        </header>
+        <div class="sync-card">
+          <svg class="icon big-icon"><use href="icons.svg#i-folder"/></svg>
+          <div>
+            <strong id="sync-title"></strong>
+            <span class="muted" id="sync-sub"></span>
+          </div>
+          <button class="btn btn-primary" id="sync-btn"></button>
+        </div>
+        <p class="muted small" id="sync-error" role="alert"></p>
+        <ol class="steps">
+          <li data-i18n="sStep1">Click "Link the folder" and choose the vi-spoiler-kalkani folder you loaded the extension from.</li>
+          <li data-i18n="sStep2">If the browser asks for edit permission, choose "Allow on every visit".</li>
+          <li data-i18n="sStep3">Do this once in every browser you use the extension in.</li>
+        </ol>
+        <div class="row-actions">
+          <button class="btn" id="export"><svg class="icon"><use href="icons.svg#i-download"/></svg><span data-i18n="sExport">Export settings</span></button>
+          <label class="btn" for="import-file"><svg class="icon"><use href="icons.svg#i-upload"/></svg><span data-i18n="sImport">Import from file</span></label>
+          <input type="file" id="import-file" accept="application/json,.json" hidden>
+        </div>
+      </section>
+
+      <!-- Limits -->
+      <section id="hakkinda" class="panel" hidden>
+        <header class="phead">
+          <h1 data-i18n="tabLimits">What it can miss</h1>
+          <p class="muted" data-i18n="oLimitsLead">No extension catches everything. Here is exactly what this one can miss, so you can decide with your eyes open.</p>
+        </header>
+        <p class="reopen"><a class="btn" href="welcome.html" target="_blank"><svg class="icon"><use href="icons.svg#i-arrow"/></svg><span data-i18n="oReopen">Open the setup wizard again</span></a></p>
+        <ul class="limits">
+          <li><svg class="icon"><use href="icons.svg#i-image"/></svg><div><strong data-i18n="lImg">Images without text</strong><span data-i18n="lImgDesc">A screenshot with no title or caption is not recognised unless it copies an official image.</span></div></li>
+          <li><svg class="icon"><use href="icons.svg#i-video"/></svg><div><strong data-i18n="lVid">Inside videos</strong><span data-i18n="lVidDesc">Frames and audio are not scanned. A video can play if its title and description give nothing away.</span></div></li>
+          <li><svg class="icon"><use href="icons.svg#i-news"/></svg><div><strong data-i18n="lNews">New tab and address bar</strong><span data-i18n="lNewsDesc">Edge and Brave new-tab news and address bar suggestions are closed to extensions. Turn them off in the browser settings.</span></div></li>
+          <li><svg class="icon"><use href="icons.svg#i-incognito"/></svg><div><strong data-i18n="lInc">Private windows</strong><span data-i18n="lIncDesc">Private windows are not protected unless "Allow in Incognito" is on for the extension.</span></div></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../src/i18n.js"></script>
+  <script src="folder.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

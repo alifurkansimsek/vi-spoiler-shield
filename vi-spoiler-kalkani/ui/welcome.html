@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en" data-i18n-title="wTitle">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VI Spoiler Shield</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <main class="wizard">
+    <div class="topbar">
+      <div class="langs" role="group" aria-label="Language">
+        <button data-lang="tr">TR</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+    <ol class="rail" id="rail">
+      <li data-i18n="rStart">Start</li><li data-i18n="rPin">Pin</li><li data-i18n="rIncognito">Private</li><li data-i18n="rMode">Mode</li><li data-i18n="rBrowsers">Browsers</li><li data-i18n="rNewTab">New tab</li><li data-i18n="rDone">Ready</li>
+    </ol>
+
+    <section class="step" data-step="0">
+      <img class="hero-mark" src="logo.svg" alt="" width="148" height="148">
+      <h1 data-i18n-html="w0Title"></h1>
+      <p class="lead" data-i18n="w0Lead">VI Spoiler Shield hides news, images and videos about the game before you see them. Setup takes two minutes.</p>
+      <ul class="facts">
+        <li><svg class="icon"><use href="icons.svg#i-text"/></svg><span data-i18n="w0F1">Text is hidden before it reaches the screen.</span></li>
+        <li><svg class="icon"><use href="icons.svg#i-image"/></svg><span data-i18n="w0F2">Copies of official images are recognised by fingerprint.</span></li>
+        <li><svg class="icon"><use href="icons.svg#i-video"/></svg><span data-i18n="w0F3">YouTube videos do not play until their title is checked.</span></li>
+      </ul>
+    </section>
+
+    <section class="step" data-step="1" hidden>
+      <h1 data-i18n="w1Title">Pin it to the toolbar</h1>
+      <p class="lead" data-i18n="w1Lead">Keep the icon in view to see how much was hidden and to manage a site in one click.</p>
+      <ol class="howto"><li data-i18n="w1S1">Click the puzzle-piece icon to the right of the address bar.</li><li data-i18n="w1S2">Click the pin next to VI Spoiler Shield.</li></ol>
+      <p class="check" id="pin-check"><span class="dot partial"></span><span data-i18n="checking">Checking...</span></p>
+    </section>
+
+    <section class="step" data-step="2" hidden>
+      <h1 data-i18n="w2Title">Protect private windows too</h1>
+      <p class="lead" data-i18n="w2Lead">Browsers turn extensions off in private windows by default, and that is where spoilers leak most.</p>
+      <ol class="howto"><li data-i18n="w2S1">Open the extension's settings page with the button below.</li><li data-i18n="w2S2">Turn on "Allow in Incognito".</li></ol>
+      <button class="btn" id="open-ext"><svg class="icon"><use href="icons.svg#i-incognito"/></svg><span data-i18n="w2Open">Open extension settings</span></button>
+      <p class="check" id="inc-check"><span class="dot partial"></span><span data-i18n="checking">Checking...</span></p>
+    </section>
+
+    <section class="step" data-step="3" hidden>
+      <h1 data-i18n="w3Title">How strict?</h1>
+      <p class="lead" data-i18n="w3Lead">You can change this any time from the extension icon.</p>
+      <div class="choices" role="radiogroup">
+        <button class="choice" role="radio" data-strict="true">
+          <strong data-i18n="w3Strict">Strict</strong>
+          <span data-i18n="w3StrictDesc">Also hides hints that never name the game: the studio's name in a gaming context, the city's name, the series name without a number. Some content about older Rockstar games goes too.</span>
+          <em data-i18n="w3Rec">Recommended</em>
+        </button>
+        <button class="choice" role="radio" data-strict="false">
+          <strong data-i18n="w3Balanced">Balanced</strong>
+          <span data-i18n="w3BalancedDesc">Only the game's name, its number and names from its world. Content about older games stays untouched.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="step" data-step="4" hidden>
+      <h1 data-i18n="w4Title">Same settings in every browser</h1>
+      <p class="lead" data-i18n="w4Lead">The extension runs from the same folder in every browser. Link this browser to that folder and the terms and settings you add reach your other browsers too.</p>
+      <div class="sync">
+        <button class="btn btn-primary" id="link"><svg class="icon"><use href="icons.svg#i-folder"/></svg><span data-i18n="sLink">Link the folder</span></button>
+        <p class="muted small" data-i18n="w4Hint">In the window that opens, choose the vi-spoiler-kalkani folder. If asked for edit permission, choose "Allow on every visit".</p>
+      </div>
+      <p class="check" id="link-check" hidden><span class="dot"></span><span data-i18n="w4Linked">Folder linked.</span></p>
+      <p class="error" id="link-error" role="alert"></p>
+    </section>
+
+    <section class="step" data-step="5" hidden>
+      <h1 data-i18n="w5Title">Turn off new-tab news</h1>
+      <p class="lead" data-i18n="w5Lead">The browser's own new-tab page and address bar suggestions are closed to extensions. Turn them off once so nothing leaks from there.</p>
+      <div class="browser" id="browser-help"></div>
+    </section>
+
+    <section class="step" data-step="6" hidden>
+      <h1 data-i18n="w6Title">You're ready.</h1>
+      <p class="lead" data-i18n="w6Lead">Type a headline below to see whether the shield would hide it. This is a sample; the same rules run on real sites.</p>
+      <div class="demo">
+        <input type="text" id="demo-input" data-i18n-attr="placeholder:w6Placeholder;aria-label:w6Placeholder">
+        <ul class="demo-list" id="demo-list"></ul>
+      </div>
+    </section>
+
+    <nav class="nav">
+      <button class="btn btn-ghost" id="prev"><svg class="icon"><use href="icons.svg#i-back"/></svg><span data-i18n="back">Back</span></button>
+      <span class="count muted" id="count"></span>
+      <button class="btn btn-primary" id="next"><span id="next-label"></span><svg class="icon"><use href="icons.svg#i-arrow"/></svg></button>
+    </nav>
+  </main>
+  <script src="../src/dictionary.js"></script>
+  <script src="../src/matcher.js"></script>
+  <script src="../src/i18n.js"></script>
+  <script src="folder.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

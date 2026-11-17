@@ -1,6 +1,6 @@
 {
   "name": "spoiler-kalkani-tools",
   "private": true,
-  "description": "Tests and helper scripts for the Spoiler Kalkanı extension",
+  "description": "Tests and helper scripts for the VI Spoiler Shield extension",
   "devDependencies": { "playwright": "1.49.1" }
 }

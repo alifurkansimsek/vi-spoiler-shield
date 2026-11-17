@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-i18n-title="name">
+<head>
+  <meta charset="utf-8">
+  <title>VI Spoiler Shield</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <img class="mark" src="logo.svg" alt="" width="40" height="40">
+    <div class="who">
+      <h1 data-i18n="name">VI Spoiler Shield</h1>
+      <p class="state"><span class="dot" id="dot"></span><span id="status" data-i18n="on">Protection on</span></p>
+    </div>
+    <a class="btn btn-ghost square" href="options.html" target="_blank" data-i18n-attr="title:settings;aria-label:settings">
+      <svg class="icon"><use href="icons.svg#i-gear"/></svg>
+    </a>
+  </header>
+
+  <section class="tally" aria-labelledby="tally-label">
+    <div class="big">
+      <strong class="num" id="count">0</strong>
+      <span id="tally-label" data-i18n="pHidden">hidden on this page</span>
+    </div>
+    <ul class="kinds" id="kinds">
+      <li><svg class="icon"><use href="icons.svg#i-text"/></svg><span data-i18n="kText">Text</span><b class="num" data-k="text">0</b></li>
+      <li><svg class="icon"><use href="icons.svg#i-image"/></svg><span data-i18n="kImage">Image</span><b class="num" data-k="image">0</b></li>
+      <li><svg class="icon"><use href="icons.svg#i-video"/></svg><span data-i18n="kVideo">Video</span><b class="num" data-k="video">0</b></li>
+      <li><svg class="icon"><use href="icons.svg#i-page"/></svg><span data-i18n="kPage">Page</span><b class="num" data-k="page">0</b></li>
+    </ul>
+  </section>
+
+  <section class="totals">
+    <p><b class="num" id="today">0</b> <span data-i18n="today">today</span></p>
+    <p><b class="num" id="week">0</b> <span data-i18n="week">last 7 days</span></p>
+    <p><b class="num" id="total">0</b> <span data-i18n="total">total</span></p>
+  </section>
+
+  <section class="recent">
+    <div class="head">
+      <h2 data-i18n="pRecent">Recently blocked</h2>
+      <a href="options.html#gecmis" target="_blank" data-i18n="pAll">Full history</a>
+    </div>
+    <ol id="recent"></ol>
+    <p class="empty muted" id="recent-empty" data-i18n="pEmpty" hidden>Nothing hidden yet.</p>
+  </section>
+
+  <section class="controls" id="controls">
+    <label class="switch" id="site-row" data-i18n-attr="title:pSiteTip">
+      <span class="label"><strong><span data-i18n="pSite">Protection:</span> <span class="site-host" id="site-name">this site</span></strong></span>
+      <input type="checkbox" id="site"><span class="track"></span>
+    </label>
+    <label class="switch" data-i18n-attr="title:pStrictTip">
+      <span class="label"><strong data-i18n="strict">Strict mode</strong></span>
+      <input type="checkbox" id="strict"><span class="track"></span>
+    </label>
+  </section>
+
+  <footer class="foot">
+    <button class="btn btn-danger wide" id="master"><svg class="icon"><use href="icons.svg#i-power"/></svg><span id="master-label" data-i18n="pOff">Turn protection off</span></button>
+    <p class="list muted" id="list-status"></p>
+  </footer>
+  <script src="../src/i18n.js"></script>
+  <script src="folder.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VI Spoiler Shield Install</title>
+  <link rel="stylesheet" href="vi-spoiler-kalkani/ui/theme.css">
+  <style>
+    body { min-height: 100vh; }
+    .sky { position: fixed; inset: 0; z-index: -1; background:
+      radial-gradient(130% 60% at 50% 112%, rgba(255, 122, 61, .5) 0%, rgba(255, 63, 164, .3) 30%, rgba(18, 10, 32, 0) 60%),
+      linear-gradient(180deg, #0d0718 0%, var(--night) 55%); }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+    .topbar { display: flex; justify-content: flex-end; margin-bottom: 18px; }
+    .langs { display: inline-flex; padding: 3px; border-radius: 30px; background: rgba(26, 15, 46, .8); border: 1px solid var(--line); }
+    .langs button { appearance: none; border: 0; background: transparent; color: var(--ink-2); font: 800 12.5px/1 var(--body); letter-spacing: .06em; padding: 8px 13px; border-radius: 30px; cursor: pointer; }
+    .langs button[aria-pressed="true"] { background: var(--sunset); color: #200716; }
+    header { display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; margin-bottom: 44px; }
+    header img { filter: drop-shadow(0 18px 40px rgba(255, 63, 164, .45)); }
+    header h1 { font-size: clamp(48px, 8vw, 84px); text-transform: uppercase; }
+    header p { color: var(--ink-2); font-size: 17px; margin-top: 10px; max-width: 52ch; }
+
+    .browsers { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+    .browsers button { appearance: none; font: 800 14px/1 var(--body); color: var(--ink-2); padding: 10px 16px; border-radius: 30px; border: 1px solid var(--line); background: var(--night-2); cursor: pointer; }
+    .browsers button[aria-pressed="true"] { color: #200716; border-color: transparent; background: var(--sunset); }
+
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
+    .steps li { display: grid; grid-template-columns: 52px 1fr; gap: 18px; padding: 20px 22px; border-radius: var(--radius); background: var(--night-2); border: 1px solid var(--line-soft); counter-increment: step; }
+    .steps li::before { content: counter(step); font: 900 44px/0.9 var(--display); color: var(--gold); }
+    .steps h2 { font-size: 26px; text-transform: uppercase; margin-bottom: 6px; }
+    .steps p { color: var(--ink-2); }
+    .addr { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 8px 8px 14px; border-radius: 10px; background: var(--night); border: 1px solid var(--line); font: 700 14px/1 var(--body); color: var(--gold); }
+    .addr button { appearance: none; border: 0; border-radius: 7px; padding: 7px 10px; background: var(--night-3); color: var(--ink); font: 700 12.5px/1 var(--body); cursor: pointer; }
+    .path { display: block; margin-top: 10px; padding: 10px 14px; border-radius: 10px; background: var(--night); border: 1px dashed var(--line); color: var(--ink); font-weight: 700; overflow-wrap: anywhere; }
+    .tip { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+
+    .after { margin-top: 44px; }
+    .after h2 { font-size: 34px; text-transform: uppercase; margin-bottom: 14px; }
+    .after ul { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--night-2); }
+    .after li { padding: 16px 20px; color: var(--ink-2); }
+    .after li + li { border-top: 1px solid var(--line-soft); }
+    .after strong { color: var(--ink); display: block; }
+    @media (max-width: 600px) { header { grid-template-columns: 1fr; } header img { width: 96px; height: 96px; } .steps li { grid-template-columns: 1fr; gap: 6px; } }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="langs" role="group" aria-label="Language">
+        <button data-lang="en">EN</button><button data-lang="tr">TR</button>
+      </div>
+    </div>
+    <header>
+      <img src="vi-spoiler-kalkani/ui/logo.svg" alt="" width="132" height="132">
+      <div>
+        <h1 data-t="title"></h1>
+        <p data-t="lead"></p>
+      </div>
+    </header>
+
+    <div class="browsers" role="group" aria-label="Browser">
+      <button data-b="brave">Brave</button>
+      <button data-b="chrome">Chrome</button>
+      <button data-b="edge">Edge</button>
+      <button data-b="opera">Opera</button>
+      <button data-b="vivaldi">Vivaldi</button>
+    </div>
+
+    <ol class="steps">
+      <li><div>
+        <h2 data-t="s1"></h2>
+        <p data-t="s1p"></p>
+        <span class="addr"><span id="addr"></span><button id="copy" data-t="copy"></button></span>
+      </div></li>
+      <li><div>
+        <h2 data-t="s2"></h2>
+        <p id="dev"></p>
+      </div></li>
+      <li><div>
+        <h2 data-t="s3"></h2>
+        <p data-t="s3p" data-html></p>
+        <span class="path" id="path">…\vi-spoiler-kalkani</span>
+        <p class="tip" data-t="s3tip"></p>
+      </div></li>
+      <li><div>
+        <h2 data-t="s4"></h2>
+        <p data-t="s4p"></p>
+        <p class="tip" id="extra"></p>
+      </div></li>
+    </ol>
+
+    <section class="after">
+      <h2 data-t="after"></h2>
+      <ul>
+        <li><strong data-t="a1"></strong><span data-t="a1p"></span></li>
+        <li><strong data-t="a2"></strong><span data-t="a2p"></span></li>
+        <li><strong data-t="a3"></strong><span data-t="a3p"></span></li>
+        <li><strong data-t="a4"></strong><span data-t="a4p"></span></li>
+      </ul>
+    </section>
+  </div>
+  <script>
+    // Plain inline script: this page opens from disk, outside the extension.
+    const T = {
+      en: {
+        doc: 'VI Spoiler Shield Install', title: 'Install',
+        lead: 'Four steps, two minutes. Do it once in every browser you use; they all run the same extension from this folder.',
+        s1: 'Open the extensions page', s1p: 'Copy this address, paste it into the address bar and press Enter. Browsers do not allow a direct link to it.', copy: 'Copy', copied: 'Copied',
+        s2: 'Turn on developer mode',
+        s3: 'Choose the folder', s3p: 'Click "Load unpacked" and choose the <b>vi-spoiler-kalkani</b> folder inside this one:',
+        s3tip: 'Do not move or delete the folder: the browser loads the extension from it every time.',
+        s4: 'Follow the setup wizard', s4p: 'A setup wizard opens once the extension is loaded. It walks you through pinning it, allowing it in private windows, choosing a protection level and sharing settings across browsers. You can switch the language there too.',
+        after: 'After install',
+        a1: 'Updating', a1p: 'When the files in the folder change, click the reload icon on VI Spoiler Shield in the extensions page.',
+        a2: 'Something hidden by mistake', a2p: 'Double-click the placeholder, or click "Show anyway" twice.',
+        a3: 'Something got through', a3p: 'Right-click it: "Block this image as a spoiler" or "Add the selected text to the block list".',
+        a4: 'When you have finished the game', a4p: '"Turn protection off" in the popup.',
+        dev: { brave: 'Turn on the "Developer mode" switch at the top right.', chrome: 'Turn on the "Developer mode" switch at the top right.', edge: 'Turn on the "Developer mode" switch in the left menu.', opera: 'Click the "Developer mode" button at the top right.', vivaldi: 'Turn on the "Developer mode" switch at the top right.' },
+        extra: { brave: 'With Brave News on you may see news on the new tab page; the wizard shows how to turn it off.', edge: 'Edge shows a news feed on the new tab page; the wizard shows how to turn it off.', opera: 'In Opera, also turn on "Allow access to search page results" for the extension.', chrome: '', vivaldi: '' }
+      },
+      tr: {
+        doc: 'VI Spoiler Kalkanı Kurulumu', title: 'Kurulum',
+        lead: 'Dört adım, iki dakika. Eklentiyi kullanacağın her tarayıcıda bir kez yap; hepsi bu klasördeki aynı eklentiyi kullanır.',
+        s1: 'Eklentiler sayfasını aç', s1p: 'Bu adresi kopyala, tarayıcının adres çubuğuna yapıştır ve Enter\'a bas. Tarayıcılar bu sayfaya doğrudan bağlantı verilmesine izin vermiyor.', copy: 'Kopyala', copied: 'Kopyalandı',
+        s2: 'Geliştirici modunu aç',
+        s3: 'Klasörü seç', s3p: '"Paketlenmemiş öğe yükle" düğmesine bas ve bu klasörün içindeki <b>vi-spoiler-kalkani</b> klasörünü seç:',
+        s3tip: 'Klasörü taşıma ya da silme: tarayıcı eklentiyi her açılışta buradan okur.',
+        s4: 'Karşılama sihirbazını izle', s4p: 'Eklenti yüklenince bir kurulum sihirbazı açılır. Araç çubuğuna sabitleme, gizli pencere izni, koruma düzeyi ve tarayıcılar arası ayar paylaşımı adım adım anlatılır. Dili orada da değiştirebilirsin.',
+        after: 'Kurulumdan sonra',
+        a1: 'Güncelleme', a1p: 'Klasördeki dosyalar değişirse eklentiler sayfasında VI Spoiler Kalkanı\'nın yenile simgesine bas.',
+        a2: 'Yanlış gizlenen bir şey', a2p: 'Yer tutucuya çift tıkla ya da "Yine de göster"e iki kez bas.',
+        a3: 'Sızan bir şey', a3p: 'Üzerine sağ tıkla: "Bu görseli spoiler olarak engelle" ya da "Seçili metni engelleme listesine ekle".',
+        a4: 'Oyunu bitirince', a4p: 'Eklenti simgesinden "Korumayı kapat".',
+        dev: { brave: 'Sağ üstteki "Geliştirici modu" anahtarını aç.', chrome: 'Sağ üstteki "Geliştirici modu" anahtarını aç.', edge: 'Sol menüdeki "Geliştirici modu" anahtarını aç.', opera: 'Sağ üstteki "Geliştirici modu" düğmesine bas.', vivaldi: 'Sağ üstteki "Geliştirici modu" anahtarını aç.' },
+        extra: { brave: 'Brave News açıksa yeni sekmede haber görebilirsin; sihirbaz nasıl kapatılacağını gösterir.', edge: 'Edge yeni sekmede haber akışı gösterir; sihirbaz nasıl kapatılacağını gösterir.', opera: 'Opera\'da ayrıca eklentinin "Arama sayfası sonuçlarına erişime izin ver" seçeneğini aç.', chrome: '', vivaldi: '' }
+      }
+    };
+    const ADDR = { brave: 'brave://extensions', chrome: 'chrome://extensions', edge: 'edge://extensions', opera: 'opera://extensions', vivaldi: 'vivaldi://extensions' };
+    const ua = navigator.userAgent;
+    let browser = navigator.brave ? 'brave' : /Edg\//.test(ua) ? 'edge' : /OPR\//.test(ua) ? 'opera' : /Vivaldi/.test(ua) ? 'vivaldi' : 'chrome';
+    let lang = /^tr/i.test(navigator.language || '') ? 'tr' : 'en';
+    try { lang = localStorage.getItem('vsk-lang') || lang; } catch { /* storage blocked */ }
+
+    function render() {
+      const s = T[lang];
+      document.documentElement.lang = lang;
+      document.title = s.doc;
+      for (const el of document.querySelectorAll('[data-t]')) {
+        if (el.hasAttribute('data-html')) el.innerHTML = s[el.dataset.t]; else el.textContent = s[el.dataset.t];
+      }
+      document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+      document.querySelectorAll('.browsers button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.b === browser)));
+      document.getElementById('addr').textContent = ADDR[browser];
+      document.getElementById('dev').textContent = s.dev[browser];
+      document.getElementById('extra').textContent = s.extra[browser];
+    }
+    document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => {
+      lang = b.dataset.lang;
+      try { localStorage.setItem('vsk-lang', lang); } catch { /* storage blocked */ }
+      render();
+    }));
+    document.querySelectorAll('.browsers button').forEach(b => b.addEventListener('click', () => { browser = b.dataset.b; render(); }));
+    document.getElementById('copy').addEventListener('click', async e => {
+      try { await navigator.clipboard.writeText(ADDR[browser]); e.target.textContent = T[lang].copied; setTimeout(() => (e.target.textContent = T[lang].copy), 1600); } catch { /* clipboard blocked */ }
+    });
+    // The folder this page sits in, so the user knows exactly what to pick.
+    if (location.protocol === 'file:') {
+      const dir = decodeURIComponent(location.pathname).replace(/^\//, '').replace(/\/[^/]*$/, '').replace(/\//g, '\\');
+      document.getElementById('path').textContent = dir + '\\vi-spoiler-kalkani';
+    }
+    render();
+  </script>
+</body>
+</html>
