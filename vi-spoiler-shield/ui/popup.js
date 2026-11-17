@@ -7,9 +7,23 @@ const KIND = { text: 'kTextLc', image: 'kImageLc', video: 'kVideoLc', page: 'kPa
 const summary = c => Object.keys(KIND).filter(k => c[k]).map(k => `${c[k]} ${t(KIND[k])}`).join(' · ');
 const hostIn = (host, list) => list.some(d => host === d || host.endsWith('.' + d));
 
+const versionParts = v => String(v || '').replace(/^v/, '').split('.').map(n => parseInt(n, 10) || 0);
+const isNewer = (a, b) => { const x = versionParts(a), y = versionParts(b); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); return false; };
+
 (async () => {
   await G6S_I18N.init();
   G6SFolder.sync().catch(() => {});
+
+  // A newer release on GitHub: one click downloads the zip, the guide explains the rest.
+  const { update } = await chrome.storage.local.get({ update: null });
+  const current = chrome.runtime.getManifest().version;
+  if (update && update.latest && isNewer(update.latest, current)) {
+    $('update').hidden = false;
+    $('up-title').textContent = t('uAvail', { v: update.latest });
+    $('up-sub').textContent = t('uSub', { c: current });
+    $('up-go').addEventListener('click', () => chrome.tabs.create({ url: chrome.runtime.getURL('ui/update.html?go=1') }));
+    $('up-dl').addEventListener('click', () => chrome.tabs.create({ url: update.zip || update.page }));
+  }
   const s = await chrome.storage.local.get({ enabled: true, strict: true, allowDomains: [], log: [], stats: { total: 0, days: {} }, remote: null, logging: true });
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   let host = '';

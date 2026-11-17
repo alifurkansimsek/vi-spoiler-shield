@@ -53,7 +53,7 @@ In the days around release, every feed fills up with news, leaks and trailer bre
     </td>
     <td width="50%" valign="top">
       <h4>Images</h4>
-      Reads file names, captions and the card around each image. Recognises resized, cropped, mirrored and captioned copies of official images by perceptual fingerprint.
+      Reads file names, captions and the card around each image. Recognises resized, cropped, mirrored and captioned copies of official images and artwork by perceptual fingerprint, also when they are pasted into a collage or meme.
     </td>
   </tr>
   <tr>
@@ -93,7 +93,7 @@ In the days around release, every feed fills up with news, leaks and trailer bre
     </td>
     <td valign="top">
       <h4>Nothing leaves your computer</h4>
-      No account, no analytics, no tracking. See <a href="#privacy">Privacy</a> for the only three network requests it makes.
+      No account, no analytics, no tracking. See <a href="#privacy">Privacy</a> for the only four network requests it makes.
     </td>
   </tr>
 </table>
@@ -140,6 +140,10 @@ flowchart LR
 
 For a step-by-step visual guide in English or Turkish, open `Install.html` from the zip. Do not move or delete the folder afterwards; the browser loads the extension from it every time.
 
+### Updating
+
+When a new version is out, the popup says so. **Update in one click** downloads it from this repository, checks it and writes it into the extension folder, then restarts the extension; your history and settings stay. The first time, pick the `vi-spoiler-shield` folder when asked. In Brave this needs `brave://flags/#file-system-access-api` turned on; otherwise the update page walks you through doing it by hand (download, extract, copy over the old folder, press reload).
+
 ## Privacy
 
 The extension collects nothing, asks for no account and sends no analytics. The only connections it makes are:
@@ -147,6 +151,7 @@ The extension collects nothing, asks for no account and sends no analytics. The 
 - **Image checks:** an image on the page is downloaded once more from its own source, without cookies, to compute its fingerprint.
 - **YouTube titles:** a video's title is read from YouTube's public oEmbed endpoint.
 - **Term list:** `liste.json` from this repository is downloaded a few times a day.
+- **New version check:** the latest release of this repository is looked up on GitHub twice a day. Nothing changes until you click: the popup then offers a one-click update or the zip.
 
 The block history and the settings stay on your computer. You can turn the history off or clear it in the settings.
 

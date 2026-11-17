@@ -20,6 +20,7 @@
         <a href="#listeler" data-tab="listeler"><svg class="icon"><use href="icons.svg#i-list"/></svg><span data-i18n="tabLists">Lists</span></a>
         <a href="#senkron" data-tab="senkron"><svg class="icon"><use href="icons.svg#i-folder"/></svg><span data-i18n="tabSync">Across browsers</span></a>
         <a href="#hakkinda" data-tab="hakkinda"><svg class="icon"><use href="icons.svg#i-eye"/></svg><span data-i18n="tabLimits">What it can miss</span></a>
+        <a href="#about" data-tab="about"><svg class="icon"><use href="icons.svg#i-info"/></svg><span data-i18n="tabAbout">About</span></a>
       </nav>
       <p class="side-foot muted"><span data-i18n="version">Version</span> <span id="ver"></span></p>
     </aside>
@@ -152,6 +153,41 @@
           <li><svg class="icon"><use href="icons.svg#i-news"/></svg><div><strong data-i18n="lNews">New tab and address bar</strong><span data-i18n="lNewsDesc">Edge and Brave new-tab news and address bar suggestions are closed to extensions. Turn them off in the browser settings.</span></div></li>
           <li><svg class="icon"><use href="icons.svg#i-incognito"/></svg><div><strong data-i18n="lInc">Private windows</strong><span data-i18n="lIncDesc">Private windows are not protected unless "Allow in Incognito" is on for the extension.</span></div></li>
         </ul>
+      </section>
+
+      <!-- About -->
+      <section id="about" class="panel" hidden>
+        <header class="phead">
+          <h1 data-i18n="tabAbout">About</h1>
+          <p class="muted" data-i18n="aLead">A free, open-source extension for everyone waiting to play the game themselves.</p>
+        </header>
+        <div class="about-card">
+          <img src="logo.svg" alt="" width="88" height="88">
+          <div class="about-id">
+            <strong data-i18n="name">VI Spoiler Shield</strong>
+            <span class="muted"><span data-i18n="version">Version</span> <span id="ver2"></span> · MIT</span>
+          </div>
+        </div>
+        <div class="update-card" id="update-card">
+          <svg class="icon big-icon"><use href="icons.svg#i-refresh"/></svg>
+          <div class="uc-text"><strong id="uc-title" data-i18n="uCard">Updates</strong><span class="muted" id="uc-sub"></span></div>
+          <div class="row-actions">
+            <a class="btn btn-primary" href="update.html?go=1" target="_blank" id="uc-go" hidden><svg class="icon"><use href="icons.svg#i-refresh"/></svg><span data-i18n="uOneClick">Update in one click</span></a>
+            <button class="btn" id="uc-dl" hidden><svg class="icon"><use href="icons.svg#i-download"/></svg><span data-i18n="uDownload">Download</span></button>
+            <a class="btn" href="update.html" target="_blank" id="uc-how" hidden><span data-i18n="uHow">How to update</span></a>
+            <button class="btn" id="uc-check"><svg class="icon"><use href="icons.svg#i-refresh"/></svg><span data-i18n="uCheck">Check now</span></button>
+          </div>
+        </div>
+        <div class="maker">
+          <p class="maker-by" data-i18n-html="aMadeBy">Made by <b>Ali Furkan Şimşek</b>, who is waiting for the PC version too.</p>
+          <div class="row-actions">
+            <a class="btn btn-primary" href="https://x.com/AFurkanSimsek" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="icons.svg#i-external"/></svg><span>@AFurkanSimsek</span></a>
+            <a class="btn" href="https://github.com/alifurkansimsek/vi-spoiler-shield" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="icons.svg#i-external"/></svg><span data-i18n="aGithub">Source code on GitHub</span></a>
+            <a class="btn" href="https://github.com/alifurkansimsek/vi-spoiler-shield/issues" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="icons.svg#i-external"/></svg><span data-i18n="aIssue">Report a missed spoiler</span></a>
+          </div>
+          <p class="muted small" data-i18n="aIssueNote">When reporting, keep the title and description spoiler-free.</p>
+        </div>
+        <p class="note muted" data-i18n="aDisclaimer">Not affiliated with Rockstar Games or Take-Two Interactive. The logo and artwork are the project's own.</p>
       </section>
     </main>
   </div>

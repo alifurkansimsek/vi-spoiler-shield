@@ -64,6 +64,7 @@
   let blockCount = 0;
   let totalBlockedText = 0;
   let coreBlocks = 0;
+  const densityLen = new WeakMap(); // blocked node -> text length it added to the density count
   let badgeTimer = 0;
   const hitUrls = new Set();
 
@@ -158,7 +159,10 @@
     node.setAttribute('data-g6s-why', reason || '');
     blocked.add(node);
     // Only real hits count toward blocking the whole page by density, not strict-mode extras.
-    if (reason === 'text' && coreMatch(node)) { totalBlockedText += (node.textContent || '').length; coreBlocks++; }
+    if (reason === 'text' && coreMatch(node)) {
+      const len = (node.textContent || '').length;
+      densityLen.set(node, len); totalBlockedText += len; coreBlocks++;
+    }
     silenceWithin(node);
     blockCount++;
     countVisit(node, reason === 'hash' || node.tagName === 'IMG' ? 'image' : (node.matches('video') || node.querySelector('video')) ? 'video' : 'text');
@@ -173,6 +177,8 @@
     node.removeAttribute('data-g6s-why');
     blocked.delete(node);
     blockCount = Math.max(0, blockCount - 1);
+    // A rescan unblocks and blocks again; the density count must not grow each time.
+    if (densityLen.has(node)) { totalBlockedText -= densityLen.get(node); coreBlocks--; densityLen.delete(node); }
     scheduleBadge();
     // Images inside were marked done while blocked; check them afresh so none stays invisible.
     const imgs = node.tagName === 'IMG' ? [node] : Array.from(node.querySelectorAll('img'));
@@ -560,8 +566,9 @@
     if (local) {
       createImageBitmap(img).then(b => {
         const hashes = self.G6S.queryHashes(b, b.width, b.height);
+        const tiles = b.width >= 180 || b.height >= 180 ? self.G6S.queryTiles(b, b.width, b.height) : [];
         b.close();
-        send({ type: 'hashQuery', hashes }, r => verdict(r && r.hit));
+        send({ type: 'hashQuery', hashes, tiles }, r => verdict(r && r.hit));
       }).catch(() => send({ type: 'hashUrl', url, urgent }, r => verdict(r && r.hit)));
     } else {
       send({ type: 'hashUrl', url, urgent }, r => verdict(r && r.hit));
@@ -911,11 +918,13 @@
       self.G6S.setStrict(s.strict !== false);
       setExtraTerms(s.terms || []);
       if (s.enabled && !s.allowed) {
-        // The first scan ran with the default rules; redo everything with the user's rules.
-        releasePage();
+        // The first scan ran with the default rules; redo every element with the user's rules.
+        // A whole-page block stays: it needs a core hit, which no setting can take away (and
+        // the tab title is already masked, so re-checking it would wrongly let the page go).
         for (const b of Array.from(blocked)) if (b.getAttribute('data-g6s-why') !== 'hash') unblock(b);
         scanSubtree(document.documentElement);
-        checkPageSignals();
+        for (const sr of shadowRoots) scanSubtree(sr);
+        if (!pageBlocked) checkPageSignals();
       }
     }
     if (!s.enabled || s.allowed) deactivate();

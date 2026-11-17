@@ -75,5 +75,5 @@ const G6SFolder = (() => {
     return false;
   }
 
-  return { status, link, grant, write, sync };
+  return { status, link, grant, write, sync, handle: getHandle };
 })();

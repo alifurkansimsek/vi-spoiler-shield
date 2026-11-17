@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-i18n-title="upTitle">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to update</title>
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    body { min-height: 100vh; padding: 48px 16px 64px; background:
+      radial-gradient(80% 50% at 85% 0%, rgba(255, 63, 164, .14), transparent 60%),
+      radial-gradient(70% 40% at 0% 100%, rgba(255, 122, 61, .1), transparent 60%), var(--night); }
+    main { max-width: 680px; margin: 0 auto; animation: in .5s var(--ease) both; }
+    .head { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+    .head img { flex: none; filter: drop-shadow(0 10px 24px rgba(255, 63, 164, .4)); }
+    h1 { font-size: 56px; text-transform: uppercase; }
+    .ver { display: inline-block; margin-top: 8px; font-weight: 700; font-size: 13px; color: var(--gold); padding: 6px 12px; border-radius: 30px; border: 1px solid rgba(255, 194, 71, .45); background: rgba(255, 194, 71, .08); }
+    .lead { color: var(--ink-2); font-size: 16px; margin: 0 0 26px; max-width: 58ch; }
+    ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+    li { counter-increment: s; display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 20px; border-radius: var(--radius); border: 1px solid var(--line-soft); background: var(--night-2); }
+    li::before { content: counter(s, decimal-leading-zero); font: 900 30px/1 var(--display); color: var(--gold); }
+    li strong { display: block; font-size: 16px; margin-bottom: 4px; }
+    li p { color: var(--ink-2); font-size: 14px; }
+    li .btn { margin-top: 12px; }
+    .one { margin: 6px 0 30px; padding: 22px 24px; border-radius: var(--radius); border: 1px solid rgba(255, 194, 71, .55); background: rgba(255, 194, 71, .07), var(--night-2); }
+    .one strong { display: block; font: 900 30px/1 var(--display); text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+    .one p { color: var(--ink-2); font-size: 14px; max-width: 60ch; }
+    .one .btn { margin-top: 14px; min-height: 44px; padding: 0 20px; font-size: 15px; }
+    .one-status { margin-top: 12px; font-weight: 700; font-size: 14px; }
+    .one-status.ok { color: var(--teal); } .one-status.err { color: #ff8f8f; }
+    .one.done { border-color: rgba(47, 211, 201, .6); background: rgba(47, 211, 201, .07), var(--night-2); }
+    .manual { font-size: 26px; text-transform: uppercase; margin-bottom: 8px; }
+    .warn { margin-top: 18px; padding: 14px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255, 107, 107, .45); background: rgba(255, 107, 107, .07); color: var(--ink-2); font-size: 14px; }
+    @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="head">
+      <img src="logo.svg" alt="" width="64" height="64">
+      <div>
+        <h1 data-i18n="upTitle">How to update</h1>
+        <span class="ver" id="versions"></span>
+      </div>
+    </div>
+    <section class="one" id="one">
+      <strong data-i18n="uoTitle">Update in one click</strong>
+      <p id="one-lead" data-i18n="uoLead">The extension downloads the new version, writes it into its own folder and restarts.</p>
+      <button class="btn btn-primary" id="one-btn"><svg class="icon"><use href="icons.svg#i-refresh"/></svg><span data-i18n="uOneClick">Update in one click</span></button>
+      <p class="one-status" id="one-status" role="status" aria-live="polite"></p>
+    </section>
+    <h2 class="manual" data-i18n="uoManual">Or update by hand</h2>
+    <p class="lead" data-i18n="upLead">Browsers do not update extensions loaded from a folder on their own.</p>
+    <ol>
+      <li><div><strong data-i18n="upS1T">Download the zip</strong><p data-i18n="upS1">The new version's zip downloads in one click.</p>
+        <button class="btn btn-primary" id="dl"><svg class="icon"><use href="icons.svg#i-download"/></svg><span data-i18n="uDownload">Download</span></button></div></li>
+      <li><div><strong data-i18n="upS2T">Extract the zip</strong><p data-i18n="upS2">Inside is a folder called vi-spoiler-shield.</p></div></li>
+      <li><div><strong data-i18n="upS3T">Copy the files over the old folder</strong><p data-i18n="upS3">Copy everything inside the new folder into the folder you loaded the extension from.</p></div></li>
+      <li><div><strong data-i18n="upS4T">Reload the extension</strong><p data-i18n="upS4">Press the reload icon on the extensions page.</p>
+        <button class="btn" id="ext"><svg class="icon"><use href="icons.svg#i-refresh"/></svg><span data-i18n="upOpenExt">Open the extensions page</span></button></div></li>
+    </ol>
+    <p class="warn" data-i18n="upWarn">Don't remove the extension and load the new folder separately.</p>
+  </main>
+  <script src="../src/i18n.js"></script>
+  <script src="folder.js"></script>
+  <script src="updater.js"></script>
+  <script src="update.js"></script>
+</body>
+</html>

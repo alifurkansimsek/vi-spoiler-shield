@@ -86,8 +86,9 @@ const settingsFile = path.join(ext, 'ayarlar.json');
 
   // 5. Remote list: only valid items survive, and a failed fetch keeps the last good list.
   await sw.evaluate(() => chrome.storage.local.set({ listUrl: 'https://example.invalid/list.json' }));
+  const before = (await sw.evaluate(() => chrome.storage.local.get('remote'))).remote;
   const bad = await sw.evaluate(() => refreshList(true));
-  ok('unreachable list records an error and keeps nothing bad', !!bad.error && bad.strong.length === 0);
+  ok('unreachable list records an error and keeps nothing bad', !!bad.error && JSON.stringify(bad.strong) === JSON.stringify((before && before.strong) || []));
   const good = await sw.evaluate(async () => {
     const o = validList({ version: 1, updated: '2026-11-17', strong: ['mroenxhzeh', 'ab', 'x'.repeat(99)], videoIds: ['abcdefghijk', 'bad'], domains: ['ornek-spoiler.test', 'not a domain'] });
     return o;

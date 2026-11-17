@@ -96,6 +96,10 @@
   // "Rockstar" alone is not enough here: the older game is also a Rockstar game.
   const CONTEXT_VC = /(2026|2027|fragman|trailer|\bps5\b|xbox series|sizinti|\bleak)/;
   const WEAK_WINDOW = 260;
+  // Both protagonists named in one passage with talk of a game ("Lucia's story… gameplay than
+  // Jason's… from the trailers"): one common first name with a game word is not enough
+  // (other games have a Jason or a Lucia), both together are.
+  const GAME_TALK = /(oyun|oyna|fragman|trailer|gameplay|karakter|character|hikaye|story ?mode|storyline|protagonist|\bps5\b|xbox|playstation|video ?game|spoiler|\bleak|sizinti|\bdlc\b|cutscene|ara sahne|seslendir|voice act|motion capture)/;
   // Phrases that point at the game without naming it, when the series or studio is close by.
   // No trailing boundary after "gta": handles such as "gtav6" or "gtanews" count too.
   const SERIES = /(\bgta|grand theft auto|grandtheftauto|rockstar)/;
@@ -119,6 +123,7 @@
       after: /^[\s:'\-–]*(?:v|iv|iii|ii|5|4|3|2|san\s*andreas|vice\s*city\s*stories|vice\s*city\s*definitive|liberty\s*city|london|chinatown|online|trilogy|advance|rp|roleplay)(?![\p{L}\p{N}])/u }
   ];
   const ANCHORS = new Set(['ivpr pvgl', 'xnyntn', "qer'dhna", 'obbovr'].map(rot13));
+  const PAIR = new Set(['wnfba', 'yhpvn'].map(rot13));
 
   function compile(extraTerms) {
     const D = g.G6S_DICT;
@@ -164,6 +169,7 @@
       // A pair counts only if one side is a distinctive term rather than a common first name.
       const other = weak.some((w, j) => j !== i && w[2] !== term && w[0] >= a && w[1] <= b && (ANCHORS.has(term) || ANCHORS.has(w[2])));
       let hit = other;
+      if (!hit && PAIR.has(term)) hit = weak.some((w, j) => j !== i && PAIR.has(w[2]) && w[2] !== term && w[0] >= a && w[1] <= b) && GAME_TALK.test(win);
       if (!hit) {
         if (term === 'vice city' || term === rot13('ivpr pvgl')) hit = !VC_EXCLUDE.test(win) && CONTEXT_VC.test(win);
         else if (term !== rot13('wnfba') || !/(schreier|momoa|statham|bourne)/.test(win)) hit = CONTEXT.test(win);

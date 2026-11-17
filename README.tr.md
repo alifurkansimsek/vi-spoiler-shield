@@ -53,7 +53,7 @@
     </td>
     <td width="50%" valign="top">
       <h4>Görseller</h4>
-      Dosya adlarını, açıklamaları ve görselin çevresindeki kartı okur. Resmî görsellerin boyutu değiştirilmiş, kırpılmış, aynalanmış ve üstüne yazı eklenmiş kopyalarını algısal parmak iziyle tanır.
+      Dosya adlarını, açıklamaları ve görselin çevresindeki kartı okur. Resmî görsellerin ve sanat çalışmalarının boyutu değiştirilmiş, kırpılmış, aynalanmış ve üstüne yazı eklenmiş kopyalarını algısal parmak iziyle tanır; bir kolajın ya da caps'in içine yapıştırılmış olsalar bile.
     </td>
   </tr>
   <tr>
@@ -93,7 +93,7 @@
     </td>
     <td valign="top">
       <h4>Hiçbir şey bilgisayarından çıkmaz</h4>
-      Hesap yok, analiz yok, takip yok. Yaptığı yalnızca üç ağ isteği için <a href="#gizlilik">Gizlilik</a> bölümüne bak.
+      Hesap yok, analiz yok, takip yok. Yaptığı yalnızca dört ağ isteği için <a href="#gizlilik">Gizlilik</a> bölümüne bak.
     </td>
   </tr>
 </table>
@@ -140,6 +140,10 @@ flowchart LR
 
 Adım adım görsel rehber için zip'in içindeki `Install.html` dosyasını aç; rehber Türkçe ve İngilizce. Klasörü sonradan taşıma ya da silme: tarayıcı eklentiyi her seferinde oradan yükler.
 
+### Güncelleme
+
+Yeni sürüm çıktığında eklenti penceresi haber verir. **Tek tıkla güncelle** yeni sürümü bu repodan indirir, doğrular, eklenti klasörüne yazar ve eklentiyi yeniden başlatır; geçmişin ve ayarların korunur. İlk seferde sorulduğunda `vi-spoiler-shield` klasörünü seç. Brave'de bunun için `brave://flags/#file-system-access-api` açık olmalı; değilse güncelleme sayfası elle nasıl yapılacağını adım adım anlatır (indir, çıkar, eski klasörün üzerine kopyala, yenile).
+
 ## Gizlilik
 
 Eklenti hiçbir şey toplamaz, hesap istemez ve analiz verisi göndermez. Yaptığı bağlantılar yalnızca şunlardır:
@@ -147,6 +151,7 @@ Eklenti hiçbir şey toplamaz, hesap istemez ve analiz verisi göndermez. Yaptı
 - **Görsel kontrolleri:** sayfadaki bir görsel, parmak izini hesaplamak için kendi kaynağından çerezsiz olarak bir kez daha indirilir.
 - **YouTube başlıkları:** bir videonun başlığı YouTube'un herkese açık oEmbed adresinden okunur.
 - **Terim listesi:** bu repodaki `liste.json` günde birkaç kez indirilir.
+- **Yeni sürüm kontrolü:** bu reponun son sürümü günde iki kez GitHub'dan kontrol edilir. Sen tıklamadan hiçbir şey değişmez: eklenti penceresi tek tıkla güncellemeyi ya da zip'i indirmeyi önerir.
 
 Engelleme geçmişi ve ayarlar bilgisayarında kalır. Geçmişi ayarlardan kapatabilir ya da silebilirsin.
 

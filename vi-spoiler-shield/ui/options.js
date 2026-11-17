@@ -212,9 +212,30 @@ $('import-file').addEventListener('change', async e => {
   e.target.value = '';
 });
 
+/* New version */
+const versionParts = v => String(v || '').replace(/^v/, '').split('.').map(n => parseInt(n, 10) || 0);
+const isNewer = (a, b) => { const x = versionParts(a), y = versionParts(b); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); return false; };
+async function renderUpdate() {
+  const { update } = await chrome.storage.local.get({ update: null });
+  const current = chrome.runtime.getManifest().version;
+  const available = !!(update && update.latest && isNewer(update.latest, current));
+  $('update-card').classList.toggle('has-update', available);
+  $('uc-title').textContent = available ? t('uAvail', { v: update.latest }) : t('uCard');
+  $('uc-sub').textContent = available ? t('uSub', { c: current }) : update && update.error && !update.latest ? t('uFail') : t('uLatest', { c: current });
+  $('uc-go').hidden = $('uc-dl').hidden = $('uc-how').hidden = !available;
+  $('uc-dl').onclick = () => chrome.tabs.create({ url: update.zip || update.page });
+}
+$('uc-check').addEventListener('click', async () => {
+  const b = $('uc-check'); b.disabled = true;
+  $('uc-sub').textContent = t('uChecking');
+  await chrome.runtime.sendMessage({ type: 'checkUpdate' }).catch(() => {});
+  b.disabled = false;
+  renderUpdate();
+});
+
 /* Start */
-function renderAll() { return Promise.all([renderState(), renderLists(), renderSync(), $('gecmis').hidden ? null : renderLog()]); }
-$('ver').textContent = chrome.runtime.getManifest().version;
+function renderAll() { return Promise.all([renderState(), renderLists(), renderSync(), renderUpdate(), $('gecmis').hidden ? null : renderLog()]); }
+$('ver').textContent = $('ver2').textContent = chrome.runtime.getManifest().version;
 (async () => {
   await G6S_I18N.init();
   await G6SFolder.sync().catch(() => {});
@@ -225,4 +246,5 @@ chrome.storage.onChanged.addListener((c, area) => {
   if (area !== 'local') return;
   if (c.log || c.stats) { if (!$('gecmis').hidden) renderLog(); }
   if (c.remote) renderLists();
+  if (c.update) renderUpdate();
 });

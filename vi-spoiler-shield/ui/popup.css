@@ -47,3 +47,12 @@ body { width: 360px; padding: 14px 14px 12px; background:
 .foot { margin-top: 10px; }
 .wide { width: 100%; }
 .list { margin-top: 8px; font-size: 12px; text-align: center; }
+
+/* New version: gold, so it reads apart from the pink tally. */
+.update { margin-top: 12px; padding: 12px; border-radius: var(--radius); border: 1px solid rgba(255, 194, 71, .55); background: rgba(255, 194, 71, .08), var(--night-2); display: grid; gap: 10px; animation: rise .4s var(--ease) both; }
+.update strong { display: block; color: var(--gold); font-size: 14px; }
+.update .up-text span { display: block; margin-top: 2px; color: var(--ink-2); font-size: 12.5px; }
+.up-actions { display: flex; gap: 8px; }
+.up-actions .btn { flex: 1; min-height: 34px; font-size: 13px; }
+.up-actions #up-dl { flex: none; width: 38px; padding: 0; }
+@keyframes rise { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }

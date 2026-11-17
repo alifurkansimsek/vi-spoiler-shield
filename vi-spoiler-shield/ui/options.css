@@ -116,3 +116,19 @@ code { font-size: 12.5px; padding: 1px 6px; border-radius: 6px; background: var(
 .lang-row { cursor: default; align-items: center; }
 .lang-row select { flex: none; min-width: 210px; font: 600 13.5px/1.2 var(--body); color: var(--ink); background: var(--night); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 9px 12px; }
 .lang-row select:focus { outline: none; border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255, 63, 164, .2); }
+
+/* About */
+.about-card { display: flex; align-items: center; gap: 20px; padding: 22px 24px; border-radius: var(--radius); border: 1px solid var(--line-soft); background: var(--sunset-soft), var(--night-2); }
+.about-card img { flex: none; filter: drop-shadow(0 10px 24px rgba(255, 63, 164, .4)); }
+.about-id strong { display: block; font: 900 34px/1 var(--display); text-transform: uppercase; letter-spacing: .01em; margin-bottom: 6px; }
+.maker { margin-top: 22px; padding: 22px 24px; border-radius: var(--radius); border: 1px solid var(--line-soft); background: var(--night-2); }
+.maker-by { font-size: 16px; margin-bottom: 16px; }
+.maker-by b { color: var(--gold); }
+.maker .row-actions { flex-wrap: wrap; margin-bottom: 12px; }
+.update-card { margin-top: 22px; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: center; padding: 20px 24px; border-radius: var(--radius); border: 1px solid var(--line-soft); background: var(--night-2); }
+.update-card .big-icon { width: 30px; height: 30px; color: var(--gold); }
+.update-card .uc-text strong { display: block; font-size: 15px; }
+.update-card .uc-text span { display: block; font-size: 13px; margin-top: 2px; }
+.update-card .row-actions { grid-column: 1 / -1; margin-top: 10px; }
+.update-card.has-update { border-color: rgba(255, 194, 71, .55); background: rgba(255, 194, 71, .07), var(--night-2); }
+.update-card.has-update strong { color: var(--gold); }

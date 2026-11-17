@@ -214,22 +214,26 @@ let running = 0;
 const MAX_PARALLEL = 12;
 const MAX_BYTES = 12e6;
 
-function matches(hashes) {
+function matches(hashes, rule) {
   for (const h of hashes) {
-    if (G6S.isHit(h, self.G6S_HASH_DB)) return true;
-    if (extraDb.length && G6S.isHit(h, extraDb)) return true;
+    if (G6S.isHit(h, self.G6S_HASH_DB, rule)) return true;
+    if (extraDb.length && G6S.isHit(h, extraDb, rule)) return true;
   }
   return false;
 }
-async function hashFromUrl(url) {
+// Whole image first; if that misses, each cell of common collage grids on its own
+// (memes often paste an official image next to unrelated pictures).
+async function imageHitFromUrl(url) {
   const res = await fetch(url, { credentials: 'omit', cache: 'force-cache', referrerPolicy: 'no-referrer' });
-  if (!res.ok) return null;
+  if (!res.ok) return false;
   const blob = await res.blob();
-  if (blob.size > MAX_BYTES || /svg/.test(blob.type)) return null;
+  if (blob.size > MAX_BYTES || /svg/.test(blob.type)) return false;
   const bmp = await createImageBitmap(blob);
   try {
-    if (bmp.width < 48 || bmp.height < 48) return null;
-    return G6S.queryHashes(bmp, bmp.width, bmp.height);
+    const w = bmp.width, h = bmp.height;
+    if (w < 48 || h < 48) return false;
+    if (matches(G6S.queryHashes(bmp, w, h))) return true;
+    return (w >= 180 || h >= 180) && matches(G6S.queryTiles(bmp, w, h), G6S.TILE_RULE);
   } finally { bmp.close(); }
 }
 // The same URL is often requested twice (before and after the page loads it): share one fetch.
@@ -244,8 +248,7 @@ function checkUrl(url) {
 async function checkUrlNow(url) {
   let hit = false;
   try {
-    const hs = await hashFromUrl(url);
-    hit = !!hs && matches(hs);
+    hit = await imageHitFromUrl(url);
   } catch { /* cross-origin failure or undecodable: nothing to compare */ }
   if (hitCache.size > 4000) hitCache.delete(hitCache.keys().next().value);
   hitCache.set(url, hit);
@@ -289,7 +292,7 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       pump();
       return true;
     case 'hashQuery':
-      reply({ hit: matches(msg.hashes || []) });
+      reply({ hit: matches(msg.hashes || []) || matches(msg.tiles || [], G6S.TILE_RULE) });
       return;
     case 'ytInfo':
       (async () => {
@@ -316,6 +319,9 @@ chrome.runtime.onMessage.addListener((msg, sender, reply) => {
       return;
     case 'readFolder':
       readFolderSettings().then(reply);
+      return true;
+    case 'checkUpdate':
+      checkUpdate(true).then(reply);
       return true;
     case 'refreshList':
       refreshList(true).then(r => { syncRules(); reply(r); });
@@ -359,6 +365,44 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   if (tab && tab.id != null) chrome.tabs.reload(tab.id);
 });
 
+/* ---------- New version check ---------- */
+// Once or twice a day the latest GitHub release is compared with this version. Nothing is
+// installed: an unpacked extension cannot replace its own files. The popup and the settings
+// offer the zip and explain how to update. Only links into this repository are kept.
+const REPO = 'https://github.com/alifurkansimsek/vi-spoiler-shield';
+const RELEASES_API = 'https://api.github.com/repos/alifurkansimsek/vi-spoiler-shield/releases/latest';
+const versionParts = v => String(v || '').replace(/^v/, '').split('.').map(n => parseInt(n, 10) || 0);
+function isNewer(a, b) {
+  const x = versionParts(a), y = versionParts(b);
+  for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0);
+  return false;
+}
+async function checkUpdate(force) {
+  const current = chrome.runtime.getManifest().version;
+  const prev = (await chrome.storage.local.get({ update: null })).update;
+  if (!force && prev && prev.current === current && Date.now() - (prev.checkedAt || 0) < 11 * 3600e3) return prev;
+  const next = { checkedAt: Date.now(), current, latest: '', zip: '', page: REPO + '/releases/latest', error: '' };
+  try {
+    const r = await fetch(RELEASES_API, { credentials: 'omit', cache: 'no-store', headers: { accept: 'application/vnd.github+json' } });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const j = await r.json();
+    const tag = String(j.tag_name || '');
+    if (!/^v?\d{1,4}\.\d{1,4}\.\d{1,4}$/.test(tag)) throw new Error('unexpected tag');
+    next.latest = tag.replace(/^v/, '');
+    if (typeof j.html_url === 'string' && j.html_url.startsWith(REPO + '/releases/')) next.page = j.html_url;
+    const zip = (Array.isArray(j.assets) ? j.assets : []).find(a => a && /\.zip$/i.test(a.name || '') && String(a.browser_download_url || '').startsWith(REPO + '/releases/download/'));
+    if (zip) next.zip = zip.browser_download_url;
+  } catch (e) {
+    next.error = String(e.message || e).slice(0, 80);
+    if (prev) { next.latest = prev.latest || ''; next.zip = prev.zip || ''; next.page = prev.page || next.page; }
+  }
+  next.available = !!next.latest && isNewer(next.latest, current);
+  await chrome.storage.local.set({ update: next });
+  G6S_I18N.setLang((await getSettings()).lang);
+  chrome.action.setTitle({ title: next.available ? G6S_I18N.t('uAvail', { v: next.latest }) : G6S_I18N.t('name') }).catch(() => {});
+  return next;
+}
+
 /* ---------- Lifecycle ---------- */
 async function startup() {
   const { listUrl } = await chrome.storage.local.get('listUrl');
@@ -366,18 +410,27 @@ async function startup() {
   await readFolderSettings();
   await refreshList(false);
   await syncRules();
+  await checkUpdate(false);
 }
 chrome.runtime.onInstalled.addListener(details => {
   buildMenus();
   startup();
   chrome.alarms.create('g6s-folder', { periodInMinutes: 2 });
   chrome.alarms.create('g6s-list', { periodInMinutes: 360 });
+  chrome.alarms.create('g6s-update', { periodInMinutes: 720 });
   if (details.reason === 'install') chrome.tabs.create({ url: 'ui/welcome.html' });
+  // Restarted by the one-click update: confirm it and remind to reload open tabs.
+  if (details.reason === 'update') chrome.storage.local.get('justUpdated').then(({ justUpdated }) => {
+    if (!justUpdated) return;
+    chrome.storage.local.remove('justUpdated');
+    chrome.tabs.create({ url: 'ui/update.html?done=1' });
+  });
 });
 chrome.runtime.onStartup.addListener(startup);
 chrome.alarms.onAlarm.addListener(a => {
   if (a.name === 'g6s-folder') readFolderSettings();
   if (a.name === 'g6s-list') refreshList(false).then(syncRules);
+  if (a.name === 'g6s-update') checkUpdate(false);
 });
 chrome.storage.onChanged.addListener((c, area) => {
   if (area !== 'local') return;
