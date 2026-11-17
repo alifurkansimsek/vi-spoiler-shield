@@ -32,7 +32,7 @@ const G6SFolder = (() => {
 
   // Asks the user to pick the extension folder and checks that it really is that folder.
   async function link() {
-    const h = await window.showDirectoryPicker({ id: 'vi-spoiler-kalkani', mode: 'readwrite' });
+    const h = await window.showDirectoryPicker({ id: 'vi-spoiler-shield', mode: 'readwrite' });
     let ok = false;
     try {
       const m = await (await (await h.getFileHandle('manifest.json')).getFile()).text();

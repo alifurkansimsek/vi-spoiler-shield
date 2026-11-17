@@ -3,7 +3,7 @@ const { t } = G6S_I18N;
 const locale = () => (G6S_I18N.lang === 'tr' ? 'tr-TR' : 'en-GB');
 const fmt = n => Number(n || 0).toLocaleString(locale());
 const dayKey = time => new Date(time).toLocaleDateString('sv-SE');
-const DEFAULT_LIST_URL = 'https://raw.githubusercontent.com/alifurkansimsek/vi-spoiler-kalkani/main/liste.json';
+const DEFAULT_LIST_URL = 'https://raw.githubusercontent.com/alifurkansimsek/vi-spoiler-shield/main/liste.json';
 const DEFAULTS = { enabled: true, strict: true, visual: true, placeholders: false, logging: true, lang: 'auto', terms: [], customDomains: [], allowDomains: [], listUrl: DEFAULT_LIST_URL, log: [], stats: { total: 0, days: {} }, remote: null };
 const SETTING_KEYS = ['enabled', 'strict', 'visual', 'placeholders', 'logging', 'lang', 'terms', 'customDomains', 'allowDomains', 'customHashes', 'listUrl'];
 const lines = id => $(id).value.split('\n').map(s => s.trim()).filter(Boolean);
@@ -203,7 +203,10 @@ $('import-file').addEventListener('change', async e => {
   try {
     const j = JSON.parse(await f.text());
     if (!j || !j.settings) throw new Error();
-    await save(Object.fromEntries(SETTING_KEYS.filter(k => k in j.settings).map(k => [k, j.settings[k]])), t('sImported'));
+    const next = Object.fromEntries(SETTING_KEYS.filter(k => k in j.settings).map(k => [k, j.settings[k]]));
+    // Files exported before 1.1.2 point to the list under the repository's old name.
+    if (next.listUrl === DEFAULT_LIST_URL.replace('vi-spoiler-shield', 'vi-spoiler-kalkani')) next.listUrl = DEFAULT_LIST_URL;
+    await save(next, t('sImported'));
     renderAll();
   } catch { toast(t('sBadFile')); }
   e.target.value = '';

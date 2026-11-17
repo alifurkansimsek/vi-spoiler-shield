@@ -2,7 +2,10 @@ importScripts('dictionary.js', 'matcher.js', 'hash.js', 'i18n.js', '../data/hash
 
 // Settings shared between browsers through ayarlar.json in the extension folder.
 const SYNC_KEYS = ['enabled', 'strict', 'visual', 'placeholders', 'logging', 'lang', 'terms', 'customDomains', 'allowDomains', 'customHashes', 'listUrl'];
-const DEFAULT_LIST_URL = 'https://raw.githubusercontent.com/alifurkansimsek/vi-spoiler-kalkani/main/liste.json';
+const DEFAULT_LIST_URL = 'https://raw.githubusercontent.com/alifurkansimsek/vi-spoiler-shield/main/liste.json';
+// The repository was called vi-spoiler-kalkani up to 1.1.1; settings saved then still point there.
+const OLD_LIST_URL = 'https://raw.githubusercontent.com/alifurkansimsek/vi-spoiler-kalkani/main/liste.json';
+const fixListUrl = u => (u === OLD_LIST_URL ? DEFAULT_LIST_URL : u);
 const DEFAULTS = {
   enabled: true, placeholders: false, visual: true, strict: true, logging: true, lang: 'auto',
   terms: [], customDomains: [], allowDomains: [], customHashes: [], listUrl: DEFAULT_LIST_URL, updatedAt: 0
@@ -125,7 +128,7 @@ async function readFolderSettings() {
       next.customHashes = s.customHashes.concat(ok.filter(h => !seen.has(h.join(','))));
     }
     if (['auto', 'tr', 'en'].includes(fs_.lang)) next.lang = fs_.lang;
-    if (typeof fs_.listUrl === 'string' && (fs_.listUrl === '' || /^https:\/\//.test(fs_.listUrl))) next.listUrl = fs_.listUrl;
+    if (typeof fs_.listUrl === 'string' && (fs_.listUrl === '' || /^https:\/\//.test(fs_.listUrl))) next.listUrl = fixListUrl(fs_.listUrl);
     importing = true;
     await chrome.storage.local.set(next);
     importing = false;
@@ -358,6 +361,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 /* ---------- Lifecycle ---------- */
 async function startup() {
+  const { listUrl } = await chrome.storage.local.get('listUrl');
+  if (listUrl === OLD_LIST_URL) await chrome.storage.local.set({ listUrl: DEFAULT_LIST_URL });
   await readFolderSettings();
   await refreshList(false);
   await syncRules();

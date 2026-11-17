@@ -1,9 +1,11 @@
+<p align="center"><b>English</b> &nbsp;·&nbsp; <a href="README.tr.md">Türkçe</a></p>
+
 <p align="center">
   <img src="docs/banner.png" alt="VI Spoiler Shield: Nobody tells you until you've played it." width="100%">
 </p>
 
 <p align="center">
-  <a href="../../releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/alifurkansimsek/vi-spoiler-kalkani?style=for-the-badge&label=release&color=ff3fa4&labelColor=1a0f2e"></a>
+  <a href="../../releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/alifurkansimsek/vi-spoiler-shield?style=for-the-badge&label=release&color=ff3fa4&labelColor=1a0f2e"></a>
   <img alt="Manifest V3" src="https://img.shields.io/badge/Manifest-V3-ff7a3d?style=for-the-badge&labelColor=1a0f2e">
   <img alt="Browsers" src="https://img.shields.io/badge/Chrome%20%C2%B7%20Brave%20%C2%B7%20Edge%20%C2%B7%20Opera%20%C2%B7%20Vivaldi-ffc247?style=for-the-badge&labelColor=1a0f2e">
   <img alt="Languages" src="https://img.shields.io/badge/UI-English%20%C2%B7%20T%C3%BCrk%C3%A7e-b48cff?style=for-the-badge&labelColor=1a0f2e">
@@ -118,9 +120,9 @@ flowchart LR
 
 ## Install
 
-1. Download `vi-spoiler-kalkani-*.zip` from [Releases](../../releases/latest) and extract it to a folder you will keep.
+1. Download `vi-spoiler-shield-*.zip` from [Releases](../../releases/latest) and extract it to a folder you will keep.
 2. Open your browser's extensions page and turn on **Developer mode**.
-3. Click **Load unpacked** and choose the `vi-spoiler-kalkani` folder.
+3. Click **Load unpacked** and choose the `vi-spoiler-shield` folder.
 4. Follow the setup wizard that opens.
 
 <details>
@@ -189,7 +191,7 @@ No extension catches everything:
 The extension needs no build step: plain JavaScript, Manifest V3.
 
 ```
-vi-spoiler-kalkani/
+vi-spoiler-shield/
 ├── manifest.json
 ├── _locales/           extension name and description (en, tr)
 ├── src/
@@ -210,8 +212,8 @@ tools/                  tests and helper scripts
 cd tools
 npm install
 npx playwright install chromium
-node test-matcher.js ../vi-spoiler-kalkani
-node test-features.js ../vi-spoiler-kalkani
+node test-matcher.js ../vi-spoiler-shield
+node test-features.js ../vi-spoiler-shield
 ```
 
 **Adding a term:** ROT13-encode it, add it to the `strong` array in `liste.json` and update `updated`:
@@ -226,6 +228,6 @@ node -e "console.log(process.argv[1].replace(/[a-z]/gi,c=>String.fromCharCode((c
 
 ## License
 
-The code is [MIT](LICENSE) licensed. The fonts (Big Shoulders Display, Manrope) are under the SIL Open Font License; their licenses are in `vi-spoiler-kalkani/ui/fonts/`.
+The code is [MIT](LICENSE) licensed. The fonts (Big Shoulders Display, Manrope) are under the SIL Open Font License; their licenses are in `vi-spoiler-shield/ui/fonts/`.
 
 <sub>This project is not affiliated with Rockstar Games or Take-Two Interactive. The logo and artwork are the project's own; no official imagery is used.</sub>

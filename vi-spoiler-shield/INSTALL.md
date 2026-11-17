@@ -8,7 +8,7 @@ This file contains no spoilers. Terms are ROT13-encoded in `src/dictionary.js`; 
 
 1. Open your browser's extensions page: `chrome://extensions`, `brave://extensions`, `edge://extensions`, `opera://extensions` or `vivaldi://extensions`.
 2. Turn on **Developer mode**.
-3. Click **Load unpacked** and choose this `vi-spoiler-kalkani` folder. Do not move or delete it afterwards.
+3. Click **Load unpacked** and choose this `vi-spoiler-shield` folder. Do not move or delete it afterwards.
 4. Follow the setup wizard: pin to the toolbar, allow in private windows, pick a protection level, link the folder for shared settings.
 
 ## When an item is hidden, and when a whole page

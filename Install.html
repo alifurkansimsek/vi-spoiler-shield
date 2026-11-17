@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VI Spoiler Shield Install</title>
-  <link rel="stylesheet" href="vi-spoiler-kalkani/ui/theme.css">
+  <link rel="stylesheet" href="vi-spoiler-shield/ui/theme.css">
   <style>
     body { min-height: 100vh; }
     .sky { position: fixed; inset: 0; z-index: -1; background:
@@ -52,7 +52,7 @@
       </div>
     </div>
     <header>
-      <img src="vi-spoiler-kalkani/ui/logo.svg" alt="" width="132" height="132">
+      <img src="vi-spoiler-shield/ui/logo.svg" alt="" width="132" height="132">
       <div>
         <h1 data-t="title"></h1>
         <p data-t="lead"></p>
@@ -80,7 +80,7 @@
       <li><div>
         <h2 data-t="s3"></h2>
         <p data-t="s3p" data-html></p>
-        <span class="path" id="path">…\vi-spoiler-kalkani</span>
+        <span class="path" id="path">…\vi-spoiler-shield</span>
         <p class="tip" data-t="s3tip"></p>
       </div></li>
       <li><div>
@@ -108,7 +108,7 @@
         lead: 'Four steps, two minutes. Do it once in every browser you use; they all run the same extension from this folder.',
         s1: 'Open the extensions page', s1p: 'Copy this address, paste it into the address bar and press Enter. Browsers do not allow a direct link to it.', copy: 'Copy', copied: 'Copied',
         s2: 'Turn on developer mode',
-        s3: 'Choose the folder', s3p: 'Click "Load unpacked" and choose the <b>vi-spoiler-kalkani</b> folder inside this one:',
+        s3: 'Choose the folder', s3p: 'Click "Load unpacked" and choose the <b>vi-spoiler-shield</b> folder inside this one:',
         s3tip: 'Do not move or delete the folder: the browser loads the extension from it every time.',
         s4: 'Follow the setup wizard', s4p: 'A setup wizard opens once the extension is loaded. It walks you through pinning it, allowing it in private windows, choosing a protection level and sharing settings across browsers. You can switch the language there too.',
         after: 'After install',
@@ -124,7 +124,7 @@
         lead: 'Dört adım, iki dakika. Eklentiyi kullanacağın her tarayıcıda bir kez yap; hepsi bu klasördeki aynı eklentiyi kullanır.',
         s1: 'Eklentiler sayfasını aç', s1p: 'Bu adresi kopyala, tarayıcının adres çubuğuna yapıştır ve Enter\'a bas. Tarayıcılar bu sayfaya doğrudan bağlantı verilmesine izin vermiyor.', copy: 'Kopyala', copied: 'Kopyalandı',
         s2: 'Geliştirici modunu aç',
-        s3: 'Klasörü seç', s3p: '"Paketlenmemiş öğe yükle" düğmesine bas ve bu klasörün içindeki <b>vi-spoiler-kalkani</b> klasörünü seç:',
+        s3: 'Klasörü seç', s3p: '"Paketlenmemiş öğe yükle" düğmesine bas ve bu klasörün içindeki <b>vi-spoiler-shield</b> klasörünü seç:',
         s3tip: 'Klasörü taşıma ya da silme: tarayıcı eklentiyi her açılışta buradan okur.',
         s4: 'Karşılama sihirbazını izle', s4p: 'Eklenti yüklenince bir kurulum sihirbazı açılır. Araç çubuğuna sabitleme, gizli pencere izni, koruma düzeyi ve tarayıcılar arası ayar paylaşımı adım adım anlatılır. Dili orada da değiştirebilirsin.',
         after: 'Kurulumdan sonra',
@@ -167,7 +167,7 @@
     // The folder this page sits in, so the user knows exactly what to pick.
     if (location.protocol === 'file:') {
       const dir = decodeURIComponent(location.pathname).replace(/^\//, '').replace(/\/[^/]*$/, '').replace(/\//g, '\\');
-      document.getElementById('path').textContent = dir + '\\vi-spoiler-kalkani';
+      document.getElementById('path').textContent = dir + '\\vi-spoiler-shield';
     }
     render();
   </script>
