@@ -1,0 +1,49 @@
+body { width: 360px; padding: 14px 14px 12px; background:
+  radial-gradient(120% 60% at 100% 0%, rgba(255, 63, 164, .16), transparent 60%), var(--night); }
+
+.top { display: flex; align-items: center; gap: 12px; }
+.mark { flex: none; filter: drop-shadow(0 6px 14px rgba(255, 63, 164, .35)); }
+.who { flex: 1; min-width: 0; }
+.who h1 { font-size: 26px; text-transform: uppercase; }
+.state { display: flex; align-items: center; gap: 8px; color: var(--ink-2); font-size: 13px; margin-top: 3px; }
+.square { width: 38px; padding: 0; }
+
+/* The tally owns the sunset: the one place the popup spends its colour. */
+.tally {
+  margin-top: 12px; padding: 14px; border-radius: var(--radius);
+  background: var(--sunset-soft), var(--night-2); border: 1px solid #4a2a55;
+  display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center;
+}
+.big strong { display: block; font: 900 56px/0.9 var(--display); letter-spacing: -.01em; color: var(--gold); }
+.big span { display: block; margin-top: 6px; color: var(--ink-2); font-weight: 600; font-size: 13px; }
+.kinds { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; min-width: 132px; }
+.kinds li { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; color: var(--ink-2); font-size: 13px; }
+.kinds .icon { width: 16px; height: 16px; color: var(--gold); }
+.kinds b { color: var(--ink); font-weight: 800; }
+
+.totals { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 8px; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); }
+.totals p { padding: 7px 10px; color: var(--muted); font-size: 12px; }
+.totals p + p { border-left: 1px solid var(--line-soft); }
+.totals b { display: block; color: var(--ink); font: 800 17px/1.2 var(--body); }
+
+.recent { margin-top: 12px; }
+.recent .head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.recent h2 { font-size: 19px; text-transform: uppercase; }
+.recent a { font-size: 12.5px; font-weight: 700; }
+.recent ol { list-style: none; margin: 0; padding: 0; }
+.recent li { display: grid; grid-template-columns: 44px 1fr auto; gap: 10px; align-items: center; padding: 6px 0; border-top: 1px solid var(--line-soft); font-size: 13px; }
+.recent li:first-child { border-top: 0; }
+.recent time { color: var(--muted); font-variant-numeric: tabular-nums; }
+.recent .host { color: var(--ink); font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.recent .sum { color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.empty { font-size: 13px; padding: 6px 0; }
+
+.controls { margin-top: 10px; display: grid; gap: 10px; padding: 12px 14px; border-radius: var(--radius); background: var(--night-2); border: 1px solid var(--line-soft); }
+.controls .label strong { font-size: 14px; }
+.controls .switch { align-items: center; }
+.controls .switch .track { margin-top: 0; }
+.site-host { display: inline !important; color: var(--gold); font-weight: 700; margin: 0 !important; }
+
+.foot { margin-top: 10px; }
+.wide { width: 100%; }
+.list { margin-top: 8px; font-size: 12px; text-align: center; }

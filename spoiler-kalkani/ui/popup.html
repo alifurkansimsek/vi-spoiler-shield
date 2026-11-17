@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <title>Spoiler Kalkanı</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <img class="mark" src="logo.svg" alt="" width="40" height="40">
+    <div class="who">
+      <h1>Spoiler Kalkanı</h1>
+      <p class="state"><span class="dot" id="dot"></span><span id="status">Koruma açık</span></p>
+    </div>
+    <a class="btn btn-ghost square" href="options.html" target="_blank" title="Ayarlar" aria-label="Ayarlar">
+      <svg class="icon"><use href="icons.svg#i-gear"/></svg>
+    </a>
+  </header>
+
+  <section class="tally" aria-labelledby="tally-label">
+    <div class="big">
+      <strong class="num" id="count">0</strong>
+      <span id="tally-label">bu sayfada gizlendi</span>
+    </div>
+    <ul class="kinds" id="kinds">
+      <li><svg class="icon"><use href="icons.svg#i-text"/></svg><span>Metin</span><b class="num" data-k="text">0</b></li>
+      <li><svg class="icon"><use href="icons.svg#i-image"/></svg><span>Görsel</span><b class="num" data-k="image">0</b></li>
+      <li><svg class="icon"><use href="icons.svg#i-video"/></svg><span>Video</span><b class="num" data-k="video">0</b></li>
+      <li><svg class="icon"><use href="icons.svg#i-page"/></svg><span>Sayfa</span><b class="num" data-k="page">0</b></li>
+    </ul>
+  </section>
+
+  <section class="totals">
+    <p><b class="num" id="today">0</b> bugün</p>
+    <p><b class="num" id="week">0</b> son 7 gün</p>
+    <p><b class="num" id="total">0</b> toplam</p>
+  </section>
+
+  <section class="recent">
+    <div class="head">
+      <h2>Son engeller</h2>
+      <a href="options.html#gecmis" target="_blank">Tüm geçmiş</a>
+    </div>
+    <ol id="recent"></ol>
+    <p class="empty muted" id="recent-empty" hidden>Henüz bir şey gizlenmedi.</p>
+  </section>
+
+  <section class="controls" id="controls">
+    <label class="switch" id="site-row" title="Kapatırsan eklenti bu sitede hiç çalışmaz">
+      <span class="label"><strong>Koruma: <span class="site-host" id="site-name">bu site</span></strong></span>
+      <input type="checkbox" id="site"><span class="track"></span>
+    </label>
+    <label class="switch" title="Oyunun adını anmayan imaları da gizler">
+      <span class="label"><strong>Katı mod</strong></span>
+      <input type="checkbox" id="strict"><span class="track"></span>
+    </label>
+  </section>
+
+  <footer class="foot">
+    <button class="btn btn-danger wide" id="master"><svg class="icon"><use href="icons.svg#i-power"/></svg><span id="master-label">Korumayı kapat</span></button>
+    <p class="list muted" id="list-status"></p>
+  </footer>
+  <script src="folder.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

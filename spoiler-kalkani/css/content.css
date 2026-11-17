@@ -1,0 +1,51 @@
+/* Images and videos stay invisible until checked. The content script releases them,
+   with a timeout as a fail-safe. Layout is preserved because only opacity changes. */
+html:not([data-g6s-off]) img:not([data-g6s-ok]),
+html:not([data-g6s-off]) video:not([data-g6s-ok]) {
+  opacity: 0 !important;
+}
+
+[data-g6s-hide] { display: none !important; }
+
+[data-g6s-mask] {
+  position: relative !important;
+  visibility: hidden !important;
+  min-height: 40px !important;
+  max-height: 220px !important;
+  overflow: hidden !important;
+  cursor: default !important;
+}
+[data-g6s-inline] { display: inline-block !important; min-width: 220px !important; }
+[data-g6s-mask] * { visibility: hidden !important; animation: none !important; }
+[data-g6s-mask]::before {
+  content: "🛡 Spoiler gizlendi · Göstermek için çift tıkla";
+  visibility: visible !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px 8px !important;
+  box-sizing: border-box !important;
+  text-align: center !important;
+  font: 500 12px/1.3 system-ui, "Segoe UI", sans-serif !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  color: #d8d4cc !important;
+  background: #24262b !important;
+  border-radius: 6px !important;
+  pointer-events: auto !important;
+}
+img[data-g6s-mask], video[data-g6s-mask], iframe[data-g6s-mask], embed[data-g6s-mask], object[data-g6s-mask], canvas[data-g6s-mask] {
+  visibility: hidden !important;
+}
+
+/* Background images and full-page state. */
+[data-g6s-nobg] { background-image: none !important; }
+html[data-g6s-page] { overflow: hidden !important; }
+html[data-g6s-page] > body { visibility: hidden !important; }
+html[data-g6s-page] > body * { visibility: hidden !important; animation: none !important; }
+html[data-g6s-player-hold] #movie_player,
+html[data-g6s-player-hold] ytd-player,
+html[data-g6s-player-hold] #shorts-player { visibility: hidden !important; }

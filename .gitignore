@@ -1,0 +1,8 @@
+# Personal settings written by the extension
+spoiler-kalkani/ayarlar.json
+ayarlar.json
+# Tooling
+node_modules/
+tools/node_modules/
+*.zip
+official/

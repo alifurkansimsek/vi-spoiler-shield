@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spoiler Kalkanı Ayarları</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <a class="brand" href="#genel">
+        <img src="logo.svg" alt="" width="44" height="44">
+        <span>Spoiler<br>Kalkanı</span>
+      </a>
+      <nav class="tabs" aria-label="Bölümler">
+        <a href="#genel" data-tab="genel"><svg class="icon"><use href="icons.svg#i-shield"/></svg>Koruma</a>
+        <a href="#gecmis" data-tab="gecmis"><svg class="icon"><use href="icons.svg#i-clock"/></svg>Geçmiş</a>
+        <a href="#listeler" data-tab="listeler"><svg class="icon"><use href="icons.svg#i-list"/></svg>Listeler</a>
+        <a href="#senkron" data-tab="senkron"><svg class="icon"><use href="icons.svg#i-folder"/></svg>Tarayıcılar arası</a>
+        <a href="#hakkinda" data-tab="hakkinda"><svg class="icon"><use href="icons.svg#i-eye"/></svg>Neyi kaçırabilir</a>
+      </nav>
+      <p class="side-foot muted">Sürüm <span id="ver"></span></p>
+    </aside>
+
+    <main>
+      <!-- Protection -->
+      <section id="genel" class="panel">
+        <header class="phead">
+          <h1>Koruma</h1>
+          <p class="muted">Değişiklikler hemen kaydedilir. Açık sekmeler yenilenince geçerli olur.</p>
+        </header>
+        <div class="state-card" id="state-card">
+          <span class="dot" id="state-dot"></span>
+          <div><strong id="state-title">Koruma açık</strong><span class="muted" id="state-sub">Her sitede çalışıyor.</span></div>
+          <button class="btn" id="state-btn">Kapat</button>
+        </div>
+        <div class="group">
+          <label class="switch"><span class="label"><strong>Katı mod</strong><span>Oyunun adını anmayan imaları da gizler: oyun bağlamında stüdyo adı, şehir adı, numarasız seri adı. Rockstar'ın eski oyunlarıyla ilgili bazı içerikler de gizlenebilir.</span></span><input type="checkbox" data-key="strict"><span class="track"></span></label>
+          <label class="switch"><span class="label"><strong>Görselleri parmak iziyle kontrol et</strong><span>Metni olmayan resmi oyun görsellerini yakalar. Görseller bir an geç açılır ve biraz fazla veri harcanır.</span></span><input type="checkbox" data-key="visual"><span class="track"></span></label>
+          <label class="switch"><span class="label"><strong>Akış kartlarının yerine uyarı göster</strong><span>Kapalıyken YouTube, X, Reddit gibi akışlarda kart iz bırakmadan kaybolur.</span></span><input type="checkbox" data-key="placeholders"><span class="track"></span></label>
+          <label class="switch"><span class="label"><strong>Engel geçmişini kaydet</strong><span>Saat, site ve gizlenen öğe sayısı saklanır. Gizli pencereler hiç kaydedilmez.</span></span><input type="checkbox" data-key="logging"><span class="track"></span></label>
+        </div>
+      </section>
+
+      <!-- History -->
+      <section id="gecmis" class="panel" hidden>
+        <header class="phead">
+          <h1>Geçmiş</h1>
+          <p class="muted">Gizlenen içeriğin kendisi saklanmaz. Sayfa adresinin yolu şifreli tutulur ve yalnızca sen isteyince açılır.</p>
+        </header>
+        <div class="stats">
+          <div><b class="num" id="st-today">0</b><span>bugün</span></div>
+          <div><b class="num" id="st-week">0</b><span>son 7 gün</span></div>
+          <div><b class="num" id="st-total">0</b><span>toplam</span></div>
+          <figure class="bars" aria-label="Son 14 günde gizlenen öğe sayısı">
+            <div class="bars-row" id="bars"></div>
+            <figcaption class="muted">Son 14 gün</figcaption>
+          </figure>
+        </div>
+        <div class="toolbar">
+          <input type="text" id="filter" placeholder="Siteye göre süz, örn. youtube" aria-label="Siteye göre süz">
+          <button class="btn btn-danger" id="clear"><svg class="icon"><use href="icons.svg#i-trash"/></svg>Geçmişi sil</button>
+        </div>
+        <div class="table-wrap">
+          <table class="log">
+            <thead><tr><th>Zaman</th><th>Site</th><th>Gizlenen</th><th>Sayfa yolu</th></tr></thead>
+            <tbody id="log"></tbody>
+          </table>
+          <p class="empty muted" id="log-empty" hidden>Kayıt yok.</p>
+        </div>
+        <p class="note muted">Şifreleme anahtarı tarayıcıda verinin yanında durur: kazara görmeyi engeller, bilgisayarına erişen birini değil.</p>
+      </section>
+
+      <!-- Lists -->
+      <section id="listeler" class="panel" hidden>
+        <header class="phead">
+          <h1>Listeler</h1>
+          <p class="muted">Yerleşik terim listesi burada gösterilmez, çünkü listenin kendisi de spoiler sayılır.</p>
+        </header>
+        <div class="field">
+          <label for="terms"><strong>Kendi terimlerin</strong><span class="muted">Çıkıştan sonra öğrendiğin yeni isimler. Her satıra bir terim.</span></label>
+          <textarea id="terms" data-list="terms" rows="5" spellcheck="false"></textarea>
+        </div>
+        <div class="field">
+          <label for="customDomains"><strong>Her zaman engellenecek siteler</strong><span class="muted">Her satıra bir alan adı, örn. ornek.com</span></label>
+          <textarea id="customDomains" data-list="customDomains" rows="4" spellcheck="false"></textarea>
+        </div>
+        <div class="field">
+          <label for="allowDomains"><strong>Korumanın kapalı olduğu siteler</strong><span class="muted">Bu sitelerde eklenti hiç çalışmaz.</span></label>
+          <textarea id="allowDomains" data-list="allowDomains" rows="3" spellcheck="false"></textarea>
+        </div>
+        <div class="actions"><button class="btn btn-primary" id="save-lists"><svg class="icon"><use href="icons.svg#i-check"/></svg>Listeleri kaydet</button><span class="saved" id="lists-saved" role="status"></span></div>
+
+        <div class="remote">
+          <h2>Otomatik terim listesi</h2>
+          <p class="muted">Çıkıştan sonra ortaya çıkan yeni isimler bu adresten günde birkaç kez çekilir. Liste yalnızca ekleme yapabilir; yerleşik korumayı kapatamaz, site serbest bırakamaz.</p>
+          <div class="field inline">
+            <input type="url" id="listUrl" aria-label="Liste adresi" spellcheck="false">
+            <button class="btn" id="list-refresh"><svg class="icon"><use href="icons.svg#i-refresh"/></svg>Şimdi güncelle</button>
+          </div>
+          <p class="muted small" id="list-info"></p>
+        </div>
+      </section>
+
+      <!-- Sync -->
+      <section id="senkron" class="panel" hidden>
+        <header class="phead">
+          <h1>Tarayıcılar arası</h1>
+          <p class="muted">Eklenti her tarayıcıda aynı klasörden çalışır. Ayarların o klasördeki <code>ayarlar.json</code> dosyasında tutulur: Brave'de bir terim eklersen Edge onu bir iki dakika içinde alır.</p>
+        </header>
+        <div class="sync-card">
+          <svg class="icon big-icon"><use href="icons.svg#i-folder"/></svg>
+          <div>
+            <strong id="sync-title">Klasör bağlı değil</strong>
+            <span class="muted" id="sync-sub">Bu tarayıcıyı klasöre bir kez bağla.</span>
+          </div>
+          <button class="btn btn-primary" id="sync-btn">Klasörü bağla</button>
+        </div>
+        <p class="muted small" id="sync-error" role="alert"></p>
+        <ol class="steps">
+          <li>"Klasörü bağla"ya bas ve eklentiyi yüklediğin <b>spoiler-kalkani</b> klasörünü seç.</li>
+          <li>Tarayıcı düzenleme izni sorarsa "Her ziyarette izin ver"i seç.</li>
+          <li>Eklentiyi kullandığın her tarayıcıda bunu bir kez yap.</li>
+        </ol>
+        <div class="row-actions">
+          <button class="btn" id="export"><svg class="icon"><use href="icons.svg#i-download"/></svg>Ayarları dosyaya aktar</button>
+          <label class="btn" for="import-file"><svg class="icon"><use href="icons.svg#i-upload"/></svg>Dosyadan içe aktar</label>
+          <input type="file" id="import-file" accept="application/json,.json" hidden>
+        </div>
+      </section>
+
+      <!-- Limits -->
+      <section id="hakkinda" class="panel" hidden>
+        <header class="phead">
+          <h1>Neyi kaçırabilir</h1>
+          <p class="muted">Hiçbir eklenti her şeyi yakalayamaz. Bilerek karar ver diye açıkça yazıyorum.</p>
+        </header>
+        <p class="reopen"><a class="btn" href="welcome.html" target="_blank"><svg class="icon"><use href="icons.svg#i-arrow"/></svg>Kurulum sihirbazını yeniden aç</a></p>
+        <ul class="limits">
+          <li><svg class="icon"><use href="icons.svg#i-image"/></svg><div><strong>Yazısız görseller</strong><span>Başlığı, açıklaması olmayan bir ekran görüntüsü resmi bir görselin kopyası değilse tanınmaz.</span></div></li>
+          <li><svg class="icon"><use href="icons.svg#i-video"/></svg><div><strong>Videonun içi</strong><span>Kareler ve ses taranmaz. Başlık ve açıklama ipucu vermiyorsa video açılabilir.</span></div></li>
+          <li><svg class="icon"><use href="icons.svg#i-news"/></svg><div><strong>Yeni sekme ve adres çubuğu</strong><span>Edge ve Brave'in yeni sekme haberleri ile adres çubuğu önerileri eklentilere kapalıdır. Tarayıcı ayarlarından kapat.</span></div></li>
+          <li><svg class="icon"><use href="icons.svg#i-incognito"/></svg><div><strong>Gizli pencereler</strong><span>Eklentiler sayfasında "Gizli modda izin ver" açık değilse gizli pencereler korunmaz.</span></div></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="folder.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

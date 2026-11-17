@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spoiler Kalkanı Kurulumu</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <main class="wizard">
+    <ol class="rail" id="rail" aria-label="Kurulum adımları">
+      <li>Başlangıç</li><li>Sabitle</li><li>Gizli pencere</li><li>Mod</li><li>Tarayıcılar</li><li>Yeni sekme</li><li>Hazır</li>
+    </ol>
+
+    <section class="step" data-step="0">
+      <img class="hero-mark" src="logo.svg" alt="" width="148" height="148">
+      <h1>Oyunu sen oynayana kadar<br>kimse anlatmasın.</h1>
+      <p class="lead">Spoiler Kalkanı, oyunla ilgili haberleri, görselleri ve videoları sen görmeden önce kapatır. Kurulum iki dakika sürer.</p>
+      <ul class="facts">
+        <li><svg class="icon"><use href="icons.svg#i-text"/></svg>Metinler ekrana çizilmeden gizlenir.</li>
+        <li><svg class="icon"><use href="icons.svg#i-image"/></svg>Resmi görsellerin kopyaları parmak iziyle tanınır.</li>
+        <li><svg class="icon"><use href="icons.svg#i-video"/></svg>YouTube videoları başlığı kontrol edilmeden oynamaz.</li>
+      </ul>
+    </section>
+
+    <section class="step" data-step="1" hidden>
+      <h1>Araç çubuğuna sabitle</h1>
+      <p class="lead">Kaç şeyin gizlendiğini görmek ve bir siteyi tek tıkla yönetmek için simge hep görünür kalsın.</p>
+      <ol class="howto">
+        <li>Adres çubuğunun sağındaki yapboz parçası simgesine bas.</li>
+        <li>Spoiler Kalkanı'nın yanındaki raptiyeye bas.</li>
+      </ol>
+      <p class="check" id="pin-check"><span class="dot partial"></span><span>Kontrol ediliyor...</span></p>
+    </section>
+
+    <section class="step" data-step="2" hidden>
+      <h1>Gizli pencerelerde de koru</h1>
+      <p class="lead">Tarayıcılar eklentileri gizli pencerelerde varsayılan olarak kapatır. Spoiler en çok oradan sızar.</p>
+      <ol class="howto">
+        <li>Aşağıdaki düğmeyle eklentinin ayar sayfasını aç.</li>
+        <li>"Gizli modda izin ver" seçeneğini aç.</li>
+      </ol>
+      <button class="btn" id="open-ext"><svg class="icon"><use href="icons.svg#i-incognito"/></svg>Eklenti ayarlarını aç</button>
+      <p class="check" id="inc-check"><span class="dot partial"></span><span>Kontrol ediliyor...</span></p>
+    </section>
+
+    <section class="step" data-step="3" hidden>
+      <h1>Ne kadar sıkı olsun?</h1>
+      <p class="lead">İstediğin zaman eklenti simgesinden değiştirebilirsin.</p>
+      <div class="choices" role="radiogroup" aria-label="Koruma düzeyi">
+        <button class="choice" role="radio" data-strict="true">
+          <strong>Katı</strong>
+          <span>Adını anmayan imaları da gizler: oyun bağlamında stüdyo adı, şehir adı, numarasız seri adı. Rockstar'ın eski oyunlarıyla ilgili bazı içerikler de gider.</span>
+          <em>Önerilen</em>
+        </button>
+        <button class="choice" role="radio" data-strict="false">
+          <strong>Dengeli</strong>
+          <span>Yalnızca oyunun adı, numarası ve evrenine ait isimler. Eski oyunlarla ilgili içerik dokunulmadan kalır.</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="step" data-step="4" hidden>
+      <h1>Tüm tarayıcılarında aynı ayarlar</h1>
+      <p class="lead">Eklenti her tarayıcıda aynı klasörden çalışır. Bu tarayıcıyı o klasöre bağlarsan eklediğin terimler ve ayarlar diğer tarayıcılara da geçer.</p>
+      <div class="sync">
+        <button class="btn btn-primary" id="link"><svg class="icon"><use href="icons.svg#i-folder"/></svg>Klasörü bağla</button>
+        <p class="muted small">Açılan pencerede <b>spoiler-kalkani</b> klasörünü seç, düzenleme izni sorulursa "Her ziyarette izin ver"i seç.</p>
+      </div>
+      <p class="check" id="link-check" hidden><span class="dot"></span><span>Klasör bağlandı.</span></p>
+      <p class="error" id="link-error" role="alert"></p>
+    </section>
+
+    <section class="step" data-step="5" hidden>
+      <h1>Yeni sekmedeki haberleri kapat</h1>
+      <p class="lead">Tarayıcının kendi yeni sekme sayfası ve adres çubuğu önerileri eklentilere kapalıdır. Buradan sızmasın diye bir kez kapat.</p>
+      <div class="browser" id="browser-help"></div>
+    </section>
+
+    <section class="step" data-step="6" hidden>
+      <h1>Hazırsın.</h1>
+      <p class="lead">Aşağıya bir başlık yaz, kalkanın onu gizleyip gizlemeyeceğini gör. Bu bir örnek; gerçek sitelerde aynı kurallar çalışır.</p>
+      <div class="demo">
+        <input type="text" id="demo-input" placeholder="Örneğin: Haftanın en çok satan oyunları" aria-label="Denenecek başlık">
+        <ul class="demo-list" id="demo-list"></ul>
+      </div>
+    </section>
+
+    <nav class="nav">
+      <button class="btn btn-ghost" id="prev"><svg class="icon"><use href="icons.svg#i-back"/></svg>Geri</button>
+      <span class="count muted" id="count"></span>
+      <button class="btn btn-primary" id="next">Başlayalım<svg class="icon"><use href="icons.svg#i-arrow"/></svg></button>
+    </nav>
+  </main>
+  <script src="../src/dictionary.js"></script>
+  <script src="../src/matcher.js"></script>
+  <script src="folder.js"></script>
+  <script src="welcome.js"></script>
+</body>
+</html>

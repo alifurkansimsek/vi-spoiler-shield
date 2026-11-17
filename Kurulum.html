@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spoiler Kalkanı Kurulumu</title>
+  <link rel="stylesheet" href="spoiler-kalkani/ui/theme.css">
+  <style>
+    body { min-height: 100vh; }
+    .sky { position: fixed; inset: 0; z-index: -1; background:
+      radial-gradient(130% 60% at 50% 112%, rgba(255, 122, 61, .5) 0%, rgba(255, 63, 164, .3) 30%, rgba(18, 10, 32, 0) 60%),
+      linear-gradient(180deg, #0d0718 0%, var(--night) 55%); }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 56px 20px 80px; }
+    header { display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; margin-bottom: 44px; }
+    header img { filter: drop-shadow(0 18px 40px rgba(255, 63, 164, .45)); }
+    header h1 { font-size: clamp(48px, 8vw, 84px); text-transform: uppercase; }
+    header p { color: var(--ink-2); font-size: 17px; margin-top: 10px; max-width: 52ch; }
+
+    .browsers { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+    .browsers button { appearance: none; font: 800 14px/1 var(--body); color: var(--ink-2); padding: 10px 16px; border-radius: 30px; border: 1px solid var(--line); background: var(--night-2); cursor: pointer; }
+    .browsers button[aria-pressed="true"] { color: #200716; border-color: transparent; background: var(--sunset); }
+
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: step; }
+    .steps li { display: grid; grid-template-columns: 52px 1fr; gap: 18px; padding: 20px 22px; border-radius: var(--radius); background: var(--night-2); border: 1px solid var(--line-soft); counter-increment: step; }
+    .steps li::before { content: counter(step); font: 900 44px/0.9 var(--display); color: var(--gold); }
+    .steps h2 { font-size: 26px; text-transform: uppercase; margin-bottom: 6px; }
+    .steps p { color: var(--ink-2); }
+    .addr { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 8px 8px 14px; border-radius: 10px; background: var(--night); border: 1px solid var(--line); font: 700 14px/1 var(--body); color: var(--gold); }
+    .addr button { appearance: none; border: 0; border-radius: 7px; padding: 7px 10px; background: var(--night-3); color: var(--ink); font: 700 12.5px/1 var(--body); cursor: pointer; }
+    .path { display: block; margin-top: 10px; padding: 10px 14px; border-radius: 10px; background: var(--night); border: 1px dashed var(--line); color: var(--ink); font-weight: 700; overflow-wrap: anywhere; }
+    .tip { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+
+    .after { margin-top: 44px; }
+    .after h2 { font-size: 34px; text-transform: uppercase; margin-bottom: 14px; }
+    .after ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; border: 1px solid var(--line-soft); border-radius: var(--radius); background: var(--night-2); }
+    .after li { padding: 16px 20px; color: var(--ink-2); }
+    .after li + li { border-top: 1px solid var(--line-soft); }
+    .after strong { color: var(--ink); display: block; }
+    @media (max-width: 600px) { header { grid-template-columns: 1fr; } header img { width: 96px; height: 96px; } .steps li { grid-template-columns: 1fr; gap: 6px; } }
+  </style>
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+  <div class="wrap">
+    <header>
+      <img src="spoiler-kalkani/ui/logo.svg" alt="" width="132" height="132">
+      <div>
+        <h1>Kurulum</h1>
+        <p>Dört adım, iki dakika. Eklentiyi kullanacağın her tarayıcıda bir kez yap; hepsi bu klasördeki aynı eklentiyi kullanır.</p>
+      </div>
+    </header>
+
+    <div class="browsers" role="group" aria-label="Tarayıcı">
+      <button data-b="brave">Brave</button>
+      <button data-b="chrome">Chrome</button>
+      <button data-b="edge">Edge</button>
+      <button data-b="opera">Opera</button>
+      <button data-b="vivaldi">Vivaldi</button>
+    </div>
+
+    <ol class="steps">
+      <li><div>
+        <h2>Eklentiler sayfasını aç</h2>
+        <p>Bu adresi kopyala, tarayıcının adres çubuğuna yapıştır ve Enter'a bas. Güvenlik nedeniyle doğrudan bağlantı verilemiyor.</p>
+        <span class="addr"><span id="addr">brave://extensions</span><button id="copy">Kopyala</button></span>
+      </div></li>
+      <li><div>
+        <h2>Geliştirici modunu aç</h2>
+        <p id="dev">Sağ üstteki "Geliştirici modu" anahtarını aç.</p>
+      </div></li>
+      <li><div>
+        <h2>Klasörü seç</h2>
+        <p>"Paketlenmemiş öğe yükle" düğmesine bas ve bu klasörün içindeki <b>spoiler-kalkani</b> klasörünü seç:</p>
+        <span class="path" id="path">…\VI Spoiler Shield\spoiler-kalkani</span>
+        <p class="tip">Klasörü taşıma ya da silme: tarayıcı eklentiyi her açılışta buradan okur.</p>
+      </div></li>
+      <li><div>
+        <h2>Karşılama sihirbazını izle</h2>
+        <p>Eklenti yüklenince bir kurulum sihirbazı açılır. Orada araç çubuğuna sabitleme, gizli pencere izni, koruma düzeyi ve tarayıcılar arası ayar paylaşımı adım adım anlatılır.</p>
+        <p class="tip" id="extra"></p>
+      </div></li>
+    </ol>
+
+    <section class="after">
+      <h2>Kurulumdan sonra</h2>
+      <ul>
+        <li><strong>Güncelleme</strong>Klasördeki dosyalar değişirse eklentiler sayfasında Spoiler Kalkanı'nın yenile simgesine bas.</li>
+        <li><strong>Yanlış gizlenen bir şey</strong>Yer tutucuya çift tıkla ya da "Yine de göster"e iki kez bas.</li>
+        <li><strong>Sızan bir şey</strong>Üzerine sağ tıkla: "Bu görseli spoiler olarak engelle" ya da "Seçili metni engelleme listesine ekle".</li>
+        <li><strong>Oyunu bitirince</strong>Eklenti simgesinden "Korumayı kapat".</li>
+      </ul>
+    </section>
+  </div>
+  <script>
+    // Plain inline script: this page opens from disk, outside the extension.
+    const info = {
+      brave: { addr: 'brave://extensions', dev: 'Sağ üstteki "Geliştirici modu" anahtarını aç.', extra: 'Brave News açıksa yeni sekmede haber görebilirsin; sihirbaz nasıl kapatılacağını gösterir.' },
+      chrome: { addr: 'chrome://extensions', dev: 'Sağ üstteki "Geliştirici modu" anahtarını aç.', extra: '' },
+      edge: { addr: 'edge://extensions', dev: 'Sol menüdeki "Geliştirici modu" anahtarını aç.', extra: 'Edge yeni sekmede MSN haberleri gösterir; sihirbaz nasıl kapatılacağını gösterir.' },
+      opera: { addr: 'opera://extensions', dev: 'Sağ üstteki "Geliştirici modu" düğmesine bas.', extra: 'Opera\'da ayrıca eklentinin "Arama sayfası sonuçlarına erişime izin ver" seçeneğini aç.' },
+      vivaldi: { addr: 'vivaldi://extensions', dev: 'Sağ üstteki "Geliştirici modu" anahtarını aç.', extra: '' }
+    };
+    const ua = navigator.userAgent;
+    let current = navigator.brave ? 'brave' : /Edg\//.test(ua) ? 'edge' : /OPR\//.test(ua) ? 'opera' : /Vivaldi/.test(ua) ? 'vivaldi' : 'chrome';
+    const render = () => {
+      document.querySelectorAll('.browsers button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.b === current)));
+      document.getElementById('addr').textContent = info[current].addr;
+      document.getElementById('dev').textContent = info[current].dev;
+      document.getElementById('extra').textContent = info[current].extra;
+    };
+    document.querySelectorAll('.browsers button').forEach(b => b.addEventListener('click', () => { current = b.dataset.b; render(); }));
+    document.getElementById('copy').addEventListener('click', async e => {
+      try { await navigator.clipboard.writeText(info[current].addr); e.target.textContent = 'Kopyalandı'; setTimeout(() => (e.target.textContent = 'Kopyala'), 1600); } catch { /* clipboard blocked */ }
+    });
+    // The folder this page sits in, so the user knows exactly what to pick.
+    if (location.protocol === 'file:') {
+      const dir = decodeURIComponent(location.pathname).replace(/^\//, '').replace(/\/[^/]*$/, '').replace(/\//g, '\\');
+      document.getElementById('path').textContent = dir + '\\spoiler-kalkani';
+    }
+    render();
+  </script>
+</body>
+</html>

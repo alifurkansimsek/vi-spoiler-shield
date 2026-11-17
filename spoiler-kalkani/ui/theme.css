@@ -1,0 +1,103 @@
+/* Spoiler Kalkanı: Vice City sunset on a night ground.
+   Night violet carries the surfaces; the sunset (pink, orange, gold) is reserved for the mark,
+   the primary action and the live numbers; teal marks "protected" state. */
+@import url('fonts.css');
+
+:root {
+  color-scheme: dark;
+  --night: #120a20;
+  --night-2: #1a0f2e;
+  --night-3: #241640;
+  --line: #3a2a5c;
+  --line-soft: #2c1f47;
+  --ink: #fbf3ff;
+  --ink-2: #d6c8ee;
+  --muted: #a896c8;
+  --pink: #ff3fa4;
+  --orange: #ff7a3d;
+  --gold: #ffc247;
+  --teal: #2fd3c9;
+  --red: #ff6b6b;
+  --sunset: linear-gradient(115deg, #ff3fa4 0%, #ff6a4d 48%, #ffb347 100%);
+  --sunset-soft: linear-gradient(115deg, rgba(255, 63, 164, .22), rgba(255, 122, 61, .16) 55%, rgba(255, 194, 71, .1));
+  --radius: 14px;
+  --radius-sm: 9px;
+  --display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --body: 'Manrope', system-ui, 'Segoe UI', sans-serif;
+  --ease: cubic-bezier(.16, 1, .3, 1);
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body {
+  background: var(--night);
+  color: var(--ink);
+  font: 500 14px/1.5 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: rgba(255, 63, 164, .45); color: #fff; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 6px; }
+* { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 10px; border: 3px solid var(--night); }
+::-webkit-scrollbar-track { background: transparent; }
+
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 900; letter-spacing: .01em; line-height: 1; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--gold); text-underline-offset: 3px; }
+a:hover { color: #ffd77a; }
+.muted { color: var(--muted); }
+.num { font-variant-numeric: tabular-nums; }
+.icon { width: 18px; height: 18px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Buttons */
+.btn {
+  appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 38px; padding: 8px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--line); background: var(--night-2); color: var(--ink);
+  font: 700 13.5px/1 var(--body); cursor: pointer; text-decoration: none;
+  transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+}
+.btn:hover { background: var(--night-3); border-color: #54407f; }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.btn-primary { border: 0; background: var(--sunset); color: #200716; box-shadow: 0 6px 18px -8px rgba(255, 63, 164, .7); }
+.btn-primary:hover { background: var(--sunset); filter: brightness(1.06); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--ink-2); }
+.btn-ghost:hover { background: var(--night-2); border-color: var(--line-soft); }
+.btn-danger { color: #ffb3b3; }
+.btn-danger:hover { border-color: #7a3448; background: #2a1426; }
+.btn-sure { border-color: var(--red); color: #fff; background: #3a1424; }
+
+/* Switch */
+.switch { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; cursor: pointer; }
+.switch input { position: absolute; opacity: 0; pointer-events: none; }
+.switch .track {
+  flex: none; width: 40px; height: 24px; margin-top: 1px; border-radius: 24px; background: var(--night-3);
+  border: 1px solid var(--line); position: relative; transition: background .3s var(--ease), border-color .3s var(--ease);
+}
+.switch .track::after {
+  content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%;
+  background: var(--muted); transition: transform .35s var(--ease), background .3s var(--ease);
+}
+.switch input:checked + .track { background: rgba(47, 211, 201, .22); border-color: var(--teal); }
+.switch input:checked + .track::after { transform: translateX(16px); background: var(--teal); }
+.switch input:focus-visible + .track { outline: 2px solid var(--gold); outline-offset: 2px; }
+.switch .label strong { display: block; font-weight: 700; color: var(--ink); }
+.switch .label span { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+/* Inputs */
+textarea, input[type="text"], input[type="url"] {
+  width: 100%; font: 500 13.5px/1.5 var(--body); color: var(--ink);
+  background: var(--night); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px;
+}
+textarea::placeholder, input::placeholder { color: #8d7cae; }
+textarea:focus, input:focus { border-color: var(--pink); outline: none; box-shadow: 0 0 0 3px rgba(255, 63, 164, .2); }
+
+/* Status dot */
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px rgba(47, 211, 201, .18); flex: none; }
+.dot.off { background: var(--red); box-shadow: 0 0 0 3px rgba(255, 107, 107, .18); }
+.dot.partial { background: var(--gold); box-shadow: 0 0 0 3px rgba(255, 194, 71, .18); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
